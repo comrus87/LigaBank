@@ -1,5 +1,4 @@
 .intro {
-
   &__list {
     @include list-default;
   }
@@ -100,5 +99,127 @@
 
   &__swiper-pagination {
     margin-bottom: 23px;
+  }
+}
+
+.swiper-pagination-bullet {
+  background-color: #2028b6;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: $bg-color;
+}
+
+@media (max-width: $tablet-width) {
+  .intro {
+    &__item {
+      min-height: 300px;
+      padding: 65px 11.2% 10px;
+    }
+
+    &__title {
+      font-size: 46px;
+      line-height: 54px;
+    }
+
+    &__sub-title {
+      margin: 6px 0 31px;
+      font-size: 18px;
+      line-height: 21px;
+      max-width: 320px;
+    }
+
+    &__link {
+      width: 206px;
+      font-size: 16px;
+      line-height: 16px;
+      padding: 15px 0 17px;
+    }
+
+    &__item--cards {
+      background: url("../img/bg-slide3-tablet.jpg") no-repeat center;
+      background-size: cover;
+    }
+
+    &__item--man {
+      background: url("../img/bg-slide1-tablet.jpg") no-repeat center;
+      background-size: cover;
+    }
+
+    &__item--woman {
+      background: url("../img/bg-slide2-tablet.jpg") no-repeat center;
+      background-size: cover;
+
+      a {
+        width: 206px;
+      }
+    }
+
+    &__swiper-pagination {
+      margin-bottom: -2px;
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .intro {
+    &__item {
+      min-height: 226px;
+      padding: 40px 4.7% 10px;
+    }
+
+    &__title {
+      font-size: 38px;
+      line-height: 45px;
+    }
+
+    &__sub-title {
+      margin: 5px 0 26px;
+      font-size: 16px;
+      line-height: 19px;
+      max-width: 200px;
+    }
+
+    &__link {
+      width: 188px;
+      font-size: 14px;
+      line-height: 16px;
+      padding: 14px 0 13px;
+    }
+
+    &__item--cards {
+      background: url("../img/bg-slide3-mobile.jpg") no-repeat center;
+      background-size: cover;
+    }
+
+    &__item--man {
+      background: url("../img/bg-slide1-mobile.jpg") no-repeat center;
+      background-size: cover;
+
+      p {
+        width: 150px;
+      }
+    }
+
+    &__item--woman {
+      background: url("../img/bg-slide2-mobile.jpg") no-repeat center;
+      background-size: cover;
+
+      a {
+        width: 188px;
+      }
+    }
+
+    &__swiper-pagination {
+      margin-bottom: -7px;
+    }
+  }
+
+
+  .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    margin: 0 3px;
   }
 }

@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
     pagination: {
       el: '.swiper-pagination',
       clickable: true
-    }
+    },
+    autoplay: {
+      delay: 4000,
+    },
+    speed: 700
   });
 
 });
