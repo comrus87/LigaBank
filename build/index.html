@@ -6,6 +6,7 @@
   <meta name="description" content="Лига Банк">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Лига Банк</title>
+  <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
@@ -72,9 +73,30 @@
       </a>
     </div>
   </header>
+  <main>
+    <section class="intro swiper-container">
+      <ul class="intro__list swiper-wrapper">
+        <li class="intro__item intro__item--cards swiper-slide">
+          <h1 class="intro__title">Лига Банк</h1>
+          <p class="intro__sub-title">Кредиты на любой случай</p>
+          <a class="intro__link" href="#">Рассчитать кредит</a>
+        </li>
+        <li class="intro__item intro__item--man swiper-slide">
+          <h1 class="intro__title">Лига Банк</h1>
+          <p class="intro__sub-title">Ваша уверенность в завтрашнем дне</p>
+        </li>
+        <li class="intro__item intro__item--woman swiper-slide">
+          <h1 class="intro__title">Лига Банк</h1>
+          <p class="intro__sub-title">Всегда рядом</p>
+          <a class="intro__link" href="#">Найти отделение</a>
+        </li>
+      </ul>
+      <div class="intro__swiper-pagination swiper-pagination"></div>
+    </section>
+  </main>
 
 
-<!--   <script src="https://unpkg.com/imask"></script> -->
-  <script src="js/script.js"></script>
+  <script src="js/vendor.min.js"></script>
+  <script src="js/main.min.js"></script>
 </body>
 </html>

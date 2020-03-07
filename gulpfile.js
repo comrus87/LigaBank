@@ -1,5 +1,7 @@
 "use strict";
 
+"use strict";
+
 var gulp = require("gulp");
 var plumber = require("gulp-plumber");
 var sourcemap = require("gulp-sourcemaps");
@@ -11,10 +13,13 @@ var csso = require("gulp-csso");
 var rename = require("gulp-rename");
 var imagemin = require("gulp-imagemin");
 var webp = require("gulp-webp");
-var svgstore = require("gulp-svgstore");
+var svgstore = require("gulp-svgstore")
 var posthtml = require("gulp-posthtml");
 var include = require("posthtml-include");
 var del = require("del");
+var concat = require('gulp-concat');
+var babel = require('gulp-babel');
+var uglify = require('gulp-uglify');
 
 gulp.task("css", function () {
   return gulp.src("source/sass/style.scss")
@@ -82,11 +87,35 @@ gulp.task("html", function () {
     .pipe(gulp.dest("build"));
 });
 
+gulp.task("js", function () {
+  return gulp.src("source/js/*.js")
+    .pipe(plumber())
+    .pipe(sourcemap.init())
+    .pipe(concat('main.js'))
+    .pipe(uglify())
+    .pipe(rename('main.min.js'))
+    .pipe(sourcemap.write(''))
+    .pipe(gulp.dest('build/js'));
+});
+
+gulp.task('js-vendor', function () {
+  return gulp.src(['source/js/vendor/*.js'])
+    .pipe(plumber())
+    .pipe(sourcemap.init())
+    .pipe(babel({presets: ['@babel/preset-env']}))
+    .pipe(concat('vendor.js'))
+    .pipe(uglify())
+    .pipe(rename('vendor.min.js'))
+    .pipe(sourcemap.write(''))
+    .pipe(gulp.dest('build/js'));
+});
+
 gulp.task("copy", function () {
   return gulp.src([
     "source/fonts/**/*.{woff,woff2}",
     "source/img/**",
     "source/js/**",
+    "!source/js/vendor/**",
     "source//*.ico"
     ], {
       base: "source"
@@ -94,14 +123,9 @@ gulp.task("copy", function () {
   .pipe(gulp.dest("build"));
 });
 
-gulp.task("js", function () {
-  return gulp.src("source/js/*.js")
-    .pipe(gulp.dest('build/js'));
-});
-
 gulp.task("clean", function () {
   return del("build");
 });
 
-gulp.task("build", gulp.series("clean", "copy", "css", "sprite", "html"));
+gulp.task("build", gulp.series("clean", "copy", "css", "sprite", "html", "js", "js-vendor"));
 gulp.task("start", gulp.series("build", "server"));

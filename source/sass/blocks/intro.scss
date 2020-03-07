@@ -1,0 +1,104 @@
+.intro {
+
+  &__list {
+    @include list-default;
+  }
+
+  &__item {
+    min-height: 400px;
+    padding: 102px 19.6% 30px;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: $roboto;
+    font-weight: 700;
+    font-size: 54px;
+    line-height: 63px;
+  }
+
+  &__sub-title {
+    margin: 8px 0 33px;
+    font-family: $roboto;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 26px;
+    max-width: 400px;
+  }
+
+  &__link {
+    display: block;
+    width: 234px;
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 17px 0 19px;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+
+  &__item--cards {
+    background-color: #2d36f3;
+    background: url("../img/bg-slide3-desktop.jpg") no-repeat center;
+    background-size: cover;
+
+    h1 {
+      color: $bg-color;
+    }
+
+    p {
+      color: #e0e1ea;
+    }
+
+    a {
+      background-color: $bg-color;
+      color: $black-color;
+    }
+  }
+
+  &__item--man {
+    background-color: #dee2ed;
+    background: url("../img/bg-slide1-desktop.jpg") no-repeat center;
+    background-size: cover;
+
+    h1 {
+      color: $black-color;
+    }
+
+    p {
+      color: #2b3c4f;
+    }
+  }
+
+  &__item--woman {
+    background-color: #e7f1fd;
+    background: url("../img/bg-slide2-desktop.jpg") no-repeat center;
+    background-size: cover;
+
+    h1 {
+      color: $black-color;
+    }
+
+    p {
+      color: #2b3c4f;
+    }
+
+    a {
+      background-color: #2c36f2;
+      color: $bg-color;
+      width: 243px;
+    }
+  }
+
+  &__swiper-pagination {
+    margin-bottom: 23px;
+  }
+}
