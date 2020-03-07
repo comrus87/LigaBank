@@ -1,0 +1,141 @@
+.main-nav {
+  display: flex;
+  align-items: center;
+
+  &__btn {
+    display: none;
+  }
+
+  &__logo {
+    margin-right: 58px;
+  }
+
+  &__logo-tablet,
+  &__logo-mobile {
+    display: none;
+  }
+
+  &__list {
+    @include list-default;
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 650px;
+    padding-top: 5px;
+  }
+
+  &__item {
+    margin-right: 25px;
+  }
+
+  &__link {
+    font-family: $roboto;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: $black-color;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+}
+
+@media (max-width: $desktop-width) {
+  .main-nav {
+    &__logo {
+      margin-right: calc(58 / #{$vw-desktop} * 100vw);
+    }
+
+    &__item {
+      margin-right: calc(25 / #{$vw-desktop} * 100vw);
+    }
+
+    &__list {
+      max-width: calc(650 / #{$vw-desktop} * 100vw);
+    }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .main-nav {
+    &__logo {
+      margin-right: 66px;
+    }
+
+    &__logo-desktop {
+      display: none;
+    }
+
+    &__logo-tablet {
+      display: block;
+    }
+
+    &__item {
+      margin-right: 20px;
+    }
+
+    &__link {
+      font-size: 14px;
+      line-height: 16px;
+    }
+
+    &__list {
+      max-width: 420px;
+      padding-top: 0;
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .main-nav {
+    &__list {
+      display: none;
+    }
+
+    &__logo {
+      margin-right: 0;
+    }
+
+    &__logo-tablet {
+      display: none;
+    }
+
+    &__logo-mobile {
+      display: block;
+    }
+
+    &__btn {
+      display: block;
+      width: 16px;
+      height: 11px;
+      background: transparent;
+      border: none;
+      border-top: 1px solid $black-color;
+      border-bottom: 1px solid $black-color;
+      position: relative;
+      cursor: pointer;
+      order: -1;
+      outline: none;
+      margin-right: 15px;
+      margin-top: 6px;
+
+      &:hover,
+      &:focus {
+        opacity: 0.7;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        background: $black-color;
+        width: 16px;
+        height: 1px;
+        top: 4px;
+        left: 0;
+      }
+    }
+  }
+}
