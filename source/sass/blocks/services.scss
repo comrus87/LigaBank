@@ -1,0 +1,164 @@
+.services {
+  @include wrap-desktop;
+  padding-top: 60px;
+  padding-bottom: 110px;
+
+  &__tab-list {
+    @include list-default;
+    display: flex;
+    width: 100%;
+  }
+
+  &__tab-item {
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+
+  span {
+    margin-left: 10px;
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #4c4b51;
+  }
+
+  &__tab-item--active {
+    background-color: $bg-color;
+
+    span {
+      color: $black-color;
+    }
+  }
+
+  &__picture-tablet,
+  &__picture-mobile {
+    display: none;
+  }
+
+  &__block {
+    display: flex;
+    background-color: $bg-color;
+    padding: 60px 135px 60px 70px;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 31px;
+    color: $black-color;
+    margin: -8px 0 18px;
+    max-width: 410px;
+  }
+
+  &__advantages-list {
+    @include list-default;
+    display: flex;
+    flex-direction: column;
+    max-width: 395px;
+  }
+
+  &__advantages-item {
+    font-family: $roboto;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+    color: $black-color;
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 5px;
+    max-width: 375px;
+
+    &::before {
+      content: "";
+      display: block;
+      position: relative;
+      width: 13px;
+      height: 10px;
+      background: url("../img/ok-adv.svg") no-repeat center;
+      background-size: cover;
+      top: 15px;
+      left: -23px;
+    }
+  }
+
+  &__link {
+    display: block;
+    width: 198px;
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 16px 0;
+    background-color: #2c36f2;
+    color: $bg-color;
+    margin-top: 30px;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+
+  &__description {
+    margin: 24px 0 0 0;
+    font-family: $roboto;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25px;
+    color: $black-color;
+    max-width: 340px;
+
+    a {
+      font-weight: 700;
+      color: $black-color;
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &__block--credits {
+    padding: 55px 135px 54px 70px;
+
+    .services__title {
+      max-width: 300px;
+      margin: -3px 0 18px;
+    }
+  }
+
+  &__block--insurance {
+    padding: 48px 135px 49px 70px;
+
+    .services__title {
+      max-width: 340px;
+      margin: 4px 0 18px;
+    }
+  }
+
+  &__block--online {
+    padding: 53px 135px 52px 70px;
+
+    .services__title {
+      max-width: 410px;
+      margin: 0 0 17px;
+    }
+  }
+}
