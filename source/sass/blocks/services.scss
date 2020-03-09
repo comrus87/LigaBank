@@ -1,7 +1,8 @@
 .services {
   @include wrap-desktop;
   padding-top: 60px;
-  padding-bottom: 110px;
+  // padding-bottom: 110px;
+  min-height: 673px;
 
   &__tab-list {
     @include list-default;
@@ -14,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 30px 0;
+    padding: 30px 10px;
     cursor: pointer;
 
     &:hover,
@@ -50,6 +51,8 @@
     background-color: $bg-color;
     padding: 60px 135px 60px 70px;
     justify-content: space-between;
+    animation-name: fade;
+    animation-duration: 1s;
   }
 
   &__title {
@@ -159,6 +162,196 @@
     .services__title {
       max-width: 410px;
       margin: 0 0 17px;
+    }
+  }
+
+  &__hide {
+    display: none;
+  }
+
+  &__show {
+    display: flex;
+  }
+
+  .swiper-wrapper {
+    box-sizing: border-box;
+  }
+
+  &__swiper-pagination {
+    display: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.2
+  }
+  to {
+    opacity: 1
+  }
+}
+
+@media (max-width: $desktop-width) {
+  .services {
+    &__picture-desktop {
+      width: calc(440 / #{$vw-desktop} * 100vw);
+      height: calc(290 / #{$vw-desktop} * 100vw);
+      margin-left: 20px;
+    }
+
+    &__block,
+    &__block--credits,
+    &__block--insurance,
+    &__block--online {
+      padding-right: calc(135 / #{$vw-desktop} * 100vw);
+    }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .services {
+    padding: 0;
+    min-height: 380px;
+    padding-bottom: 80px;
+
+    &__tab-list {
+      display: none;
+    }
+
+    &__picture-desktop {
+      display: none;
+    }
+
+    &__picture-tablet {
+      display: block;
+      width: 289px;
+      height: 260px;
+    }
+
+    &__block {
+      min-height: 380px;
+      padding: 60px 45px 60px 45px;
+    }
+
+    &__title {
+      font-size: 18px;
+      line-height: 25px;
+      margin: -5px 0 13px;
+      max-width: 305px;
+    }
+
+    &__advantages-item {
+      font-size: 16px;
+      line-height: 21px;
+      margin-bottom: 5px;
+      max-width: 355px;
+    }
+
+    &__link {
+      margin-top: 25px;
+      padding: 16px 0 15px;
+    }
+
+    &__description {
+      margin: 25px 0 0;
+      font-size: 16px;
+      line-height: 22px;
+      max-width: 305px;
+    }
+
+    &__block--credits {
+      padding: 60px 45px;
+
+      .services__title {
+        max-width: 235px;
+        margin: -5px 0 13px;
+      }
+    }
+
+    &__block--insurance {
+      padding: 60px 45px;
+
+      .services__title {
+        max-width: 280px;
+        margin: -5px 0 12px;
+      }
+    }
+
+    &__block--online {
+      padding: 60px 45px;
+
+      .services__title {
+        max-width: 335px;
+        margin: -5px 0 12px;
+      }
+
+      .services__advantages-item {
+        max-width: 340px;
+      }
+    }
+
+    &__active-bullet {
+      background-color: #e0e0e0;
+    }
+
+    &__swiper-pagination {
+      display: block;
+      margin-bottom: 80px;
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .services {
+    min-height: 362px;
+    padding-bottom: 60px;
+
+    &__picture-tablet {
+      display: none;
+    }
+
+    &__picture-mobile {
+      display: block;
+      width: 87px;
+      height: 113px;
+      position: absolute;
+      right: 0;
+      top: 98px;
+    }
+
+    &__block {
+      min-height: 362px;
+      padding: 60px 15px;
+    }
+
+    &__title {
+      font-size: 16px;
+      line-height: 22px;
+      margin: -5px 0 13px;
+      max-width: 100%;
+    }
+
+    &__advantages-item {
+      font-size: 14px;
+      line-height: 18px;
+      margin-bottom: 4px;
+      max-width: 235px;
+      padding-left: 15px;
+
+      &::before {
+        width: 10px;
+        height: 8px;
+        top: 12px;
+        left: -16px;
+      }
+    }
+
+    &__link {
+      margin-top: 20px;
+      font-size: 14px;
+      line-height: 16px;
+      padding: 14px 0;
+      width: 100%;
     }
   }
 }
