@@ -1,7 +1,6 @@
 .services {
   @include wrap-desktop;
   padding-top: 60px;
-  // padding-bottom: 110px;
   min-height: 673px;
 
   &__tab-list {
@@ -22,15 +21,15 @@
     &:focus {
       opacity: 0.7;
     }
-  }
 
-  span {
-    margin-left: 10px;
-    font-family: $roboto;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 21px;
-    color: #4c4b51;
+    span {
+      margin-left: 10px;
+      font-family: $roboto;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 21px;
+      color: #4c4b51;
+    }
   }
 
   &__tab-item--active {
@@ -53,6 +52,10 @@
     justify-content: space-between;
     animation-name: fade;
     animation-duration: 1s;
+  }
+
+  &__title-container {
+    width: 100%;
   }
 
   &__title {
@@ -107,7 +110,7 @@
     cursor: pointer;
     border-radius: 4px;
     padding: 16px 0;
-    background-color: #2c36f2;
+    background-color: $blue-color;
     color: $bg-color;
     margin-top: 30px;
 
@@ -290,13 +293,22 @@
       }
     }
 
-    &__active-bullet {
-      background-color: #e0e0e0;
-    }
-
     &__swiper-pagination {
       display: block;
       margin-bottom: 80px;
+    }
+
+    &__bullet {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #2028b6;
+      margin: 0 4px;
+    }
+
+    &__active-bullet {
+      background-color: #e0e0e0;
     }
   }
 }
@@ -352,6 +364,51 @@
       line-height: 16px;
       padding: 14px 0;
       width: 100%;
+    }
+
+    &__description {
+      margin: 18px 0 0;
+      font-size: 14px;
+      line-height: 20px;
+      max-width: 100%;
+    }
+
+    &__block--credits {
+
+      .services__title {
+        max-width: 80%;
+      }
+    }
+
+    &__block--insurance {
+
+      .services__title {
+        max-width: 90%;
+        min-height: 33px;
+        margin: -5px 0 14px;
+      }
+    }
+
+    &__block--online {
+      padding: 60px 15px 51px;
+
+      .services__title {
+        max-width: 85%;
+      }
+
+      .services__advantages-item {
+        max-width: 80%;
+      }
+    }
+
+    &__swiper-pagination {
+      margin-bottom: 53px;
+    }
+
+    &__bullet {
+      width: 6px;
+      height: 6px;
+      margin: 0 3px;
     }
   }
 }

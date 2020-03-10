@@ -91,7 +91,7 @@
     }
 
     a {
-      background-color: #2c36f2;
+      background-color: $blue-color;
       color: $bg-color;
       width: 243px;
     }
@@ -215,7 +215,6 @@
       margin-bottom: -7px;
     }
   }
-
 
   .swiper-pagination-bullet {
     width: 6px;
