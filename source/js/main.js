@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var loginInput = document.querySelector('#login');
   var passwordInput = document.querySelector('#password');
   var formLogin = document.querySelector('#login-form');
+  var btnShowPassword = document.querySelector('.modal-login__password-btn');
 
   var tabs = document.querySelectorAll('.services__tab-item');
   var tabContents = document.querySelectorAll('.services__block');
@@ -33,21 +34,47 @@ document.addEventListener('DOMContentLoaded', function () {
     passwordInput.value = '';
   }
 
-  btnOpenModalLogin.addEventListener('click', openLoginModal);
-  btnCloseModalLogin.addEventListener('click', closeLoginModal);
 
-  document.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ESC_KEYCODE) {
-      closeLoginModal();
+  function changeShowPassword() {
+    if (passwordInput.getAttribute('type') === 'password') {
+      passwordInput.setAttribute('type', 'text');
+    } else if (passwordInput.getAttribute('type') === 'text') {
+      passwordInput.setAttribute('type', 'password');
     }
-  });
+  }
 
-  formLogin.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-    localStorage.setItem('Логин', loginInput.value);
-    localStorage.setItem('Пароль', passwordInput.value);
-    closeLoginModal();
-  });
+  if (modalLogin) {
+    btnShowPassword.addEventListener('mousedown', function () {
+      var count = 0;
+      var timerId = setInterval(function () {
+        count++;
+      }, 200);
+
+      btnShowPassword.addEventListener('mouseup', function () {
+        clearInterval(timerId);
+        if (count > 2) {
+          changeShowPassword();
+          count = 0;
+        }
+      });
+    });
+
+    btnOpenModalLogin.addEventListener('click', openLoginModal);
+    btnCloseModalLogin.addEventListener('click', closeLoginModal);
+
+    document.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === ESC_KEYCODE) {
+        closeLoginModal();
+      }
+    });
+
+    formLogin.addEventListener('submit', function (evt) {
+      evt.preventDefault();
+      localStorage.setItem('Логин', loginInput.value);
+      localStorage.setItem('Пароль', passwordInput.value);
+      closeLoginModal();
+    });
+  }
 
 
   // СЛайдер
