@@ -187,8 +187,85 @@
 
       </div>
       <div class="services__swiper-pagination swiper-pagination"></div>
-
     </section>
+
+    <section class="calculator">
+        <h2 class="calculator__title">Кредитный калькулятор</h2>
+        <div class="calculator__container">
+
+          <div class="calculator__target-column">
+            <h3 class="calculator__target-title">Шаг 1. Цель кредита</h3>
+            <select name="creditlist">
+              <option selected="" disabled="">Выберите цель кредита</option>
+              <option value="mortgage">Ипотечное кредитование</option>
+              <option value="avto">Автомобильное кредитование</option>
+              <option value="consumer">Потребительский кредит</option>
+             </select>
+
+              <div class="calculator__param-container">
+                <h3 class="calculator__target-title">Шаг 2. Введите параметры кредита</h3>
+
+                <div class="calculator__total-sum">
+                  <h4>Стоимость недвижимости</h4>
+                  <div class="calculator__input-container">
+                    <input type="text" name="total-sum" value="2 000 000 рублей">
+                    <button class="calculator__btn-minus" type="button">-</button>
+                    <button class="calculator__btn-plus" type="button">+</button>
+                  </div>
+                  <span>От 1 200 000  до 25 000 000 рублей</span>
+                </div>
+
+                <div class="calculator__initial-pay">
+                  <h4>Первоначальный взнос</h4>
+                  <input type="text" name="initial-pay" value="200 000 рублей">
+                  <input type="range" name="initial-pay-range" value="0">
+                  <span>10%</span>
+                </div>
+
+                <div class="calculator__period">
+                  <h4>Срок кредитования</h4>
+                  <input type="text" name="period" value="5 лет">
+                  <input type="range" name="period-range" value="0">
+                  <div class="calculator__period-container">
+                    <span>5 лет</span>
+                    <span>30 лет</span>
+                  </div>
+                </div>
+
+                <div class="calculator__capital">
+                  <input type="checkbox" name="capital" checked="">
+                  <label for="capital">Использовать материнский капитал</label>
+                </div>
+              </div>
+          </div>
+
+          <div class="calculator__offer-column">
+            <h3 class="calculator__offer-title">Наше предложение</h3>
+            <ul class="calculator__offer-list">
+              <li class="calculator__offer-item">
+                <span>1 330 000 рублей</span>
+                <h4>Сумма ипотеки</h4>
+              </li>
+              <li class="calculator__offer-item">
+                <span>9,40%</span>
+                <h4>Процентная ставка</h4>
+              </li>
+              <li class="calculator__offer-item">
+                <span>27 868 рублей</span>
+                <h4>Ежемесячный платеж</h4>
+              </li>
+              <li class="calculator__offer-item">
+                <span>61 929 рублей</span>
+                <h4>Необходимый доход</h4>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </section>
+
+
+
+
   </main>
 
   <footer>
