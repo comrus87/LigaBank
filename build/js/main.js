@@ -156,5 +156,14 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', changeServicePage);
   }
 
+  // Калькулятор
+
+  var select = document.querySelector('.calculator__select');
+  var selectTitle = document.querySelector('.calculator__select-title');
+
+  selectTitle.addEventListener('click', function () {
+    select.classList.toggle('calculator__select--active');
+  });
+
 
 });

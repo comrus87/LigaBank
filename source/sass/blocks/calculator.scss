@@ -1,4 +1,398 @@
 .calculator {
   @include wrap-desktop;
 
+  &__title {
+    font-family: $roboto;
+    font-weight: 700;
+    font-size: 41px;
+    line-height: 41px;
+    color: $black-color;
+    margin: 0 0 57px;
+  }
+
+  &__target-title {
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 31px;
+    color: $black-color;
+    margin: 0 0 22px 0;
+  }
+
+  &__container {
+    display: flex;
+  }
+
+  &__target-column {
+    width: 600px;
+    margin-right: 70px;
+  }
+
+
+  &__select {
+    position: relative;
+    width: 100%;
+    margin-bottom: 33px;
+  }
+
+  &__select-title {
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    position: relative;
+    border-radius: 4px;
+    padding: 19px 24px 17px;
+    border: 1px solid $black-color;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 30px;
+      right: 25px;
+      display: block;
+      width: 12px;
+      height: 2px;
+      transition: all 0.2s ease-out;
+      background-color: $black-color;
+      transform: translate(-4px, -50%) rotate(45deg);
+    }
+
+    &::after {
+      transform: translate(4px, -50%) rotate(-45deg);
+    }
+  }
+
+  &__select-list {
+    @include list-default;
+    position: absolute;
+    left: 400px;
+    width: 100%;
+    top: 60px;
+    left: 0;
+    display: none;
+    z-index: 10;
+  }
+
+  &__select-item {
+    padding: 18px 24px 19px;
+    border: 1px solid $black-color;
+    border-top: none;
+    width: 100%;
+    cursor: pointer;
+    background-color: #ffffff;
+
+    &:hover,
+    &:focus {
+      label {
+        opacity: 0.7;
+      }
+    }
+
+    input {
+      display: none;
+    }
+
+    label {
+      font-family: $roboto;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 22px;
+      cursor: pointer;
+    }
+  }
+
+  &__select-item:last-child {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  &__select--active {
+
+    .calculator__select-title {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+
+      &::before,
+      &::after {
+        transform: translate(-4px, -50%) rotate(-45deg);
+      }
+
+      &::after {
+        transform: translate(4px, -50%) rotate(45deg);
+      }
+    }
+
+    .calculator__select-list {
+      display: block;
+    }
+  }
+
+  &__mortgage-container,
+  &__avto-container,
+  &__consumer-container {
+
+    .calculator__target-title {
+      margin-bottom: 17px;
+    }
+
+    h4 {
+      font-family: $roboto;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      color: #394959;
+      margin: 0 0 9px;
+    }
+
+    input[type="text"] {
+      @include calc-input;
+    }
+
+    input[type="range"] {
+      appearance: none;
+      width: 100%;
+      height: 1px;
+      background-color: #c1c2ca;
+      outline: none;
+      margin-top: 21px;
+
+      &::-webkit-slider-thumb {
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+        background-color: $blue-color;
+      }
+
+      &::-moz-range-thumb {
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        cursor: pointer;
+        background-color: $blue-color;
+      }
+    }
+  }
+
+  &__input-container {
+    position: relative;
+  }
+
+  &__btn-minus,
+  &__btn-plus {
+    display: block;
+    position: absolute;
+    top: 22px;
+    width: 16px;
+    height: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    background: transparent;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      width: 16px;
+      height: 2px;
+      background-color: $black-color;
+      position: absolute;
+      left: 0;
+      top: 7px;
+    }
+  }
+
+   &__btn-minus {
+    left: 24px;
+  }
+
+  &__btn-plus {
+    right: 24px;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 2px;
+      height: 16px;
+      background-color: $black-color;
+      position: absolute;
+      left: 7px;
+      top: 0;
+    }
+  }
+
+  &__total-sum span,
+  &__pay-percent,
+  &__min-period,
+  &__max-period {
+    @include desc-for-input;
+  }
+
+  &__total-sum span {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 21px;
+  }
+
+  &__period {
+    margin-top: 19px;
+    margin-bottom: 24px;
+
+     input[type="range"] {
+      margin-top: 17px;
+     }
+  }
+
+  &__period-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 7px;
+  }
+
+  &__capital input+label,
+  &__kasko input+label,
+  &__insurance input+label,
+  &__participant input+label {
+    position: relative;
+    font-family: $roboto;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: $black-color;
+    cursor: pointer;
+    padding-left: 24px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 16px;
+      height: 16px;
+      border: 1px solid $blue-color;
+      border-radius: 2px;
+      left: 0;
+      top: 2px;
+    }
+  }
+
+  &__capital input:checked+label,
+  &__kasko input:checked+label,
+  &__insurance input:checked+label,
+  &__participant input:checked+label {
+
+    &::after {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: url("../img/checkbox.png") no-repeat center;
+      background-size: cover;
+      left: 0;
+      top: 2px;
+    }
+  }
+
+  &__kasko {
+    margin-bottom: 4px;
+  }
+
+  &__offer-column {
+    width: 500px;
+    background-color: $bg-color;
+    padding: 53px 60px 60px 58px;
+    margin-top: 7px;
+  }
+
+  &__offer-title {
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 31px;
+    color: $black-color;
+    margin: 0 0 24px;
+  }
+
+  &__offer-list {
+    @include list-default;
+    display: flex;
+    flex-wrap: wrap;
+
+  }
+
+  &__offer-item {
+    width: 180px;
+    margin-right: 46px;
+    margin-bottom: 26px;
+
+    span {
+      font-family: $roboto;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 31px;
+      color: $black-color;
+    }
+
+    h4 {
+      font-family: $roboto;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      color: #394959;
+      margin: 2px 0 0;
+    }
+  }
+
+  &__offer-item:nth-child(2n) {
+    width: 156px;
+    margin-right: 0;
+  }
+
+  &__fill-form {
+    display: block;
+    width: 100%;
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 15px 0 14px;
+    color: $bg-color;
+    background-color: $blue-color;
+    border: none;
+    outline: none;
+    margin-top: 8px;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+}
+
+@media (max-width: $desktop-width) {
+  .calculator {
+    &__target-column {
+      width: calc(600 / #{$vw-desktop} * 100vw);
+      margin-right: calc(70 / #{$vw-desktop} * 100vw);
+    }
+  }
+
 }

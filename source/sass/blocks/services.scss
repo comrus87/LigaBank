@@ -1,7 +1,7 @@
 .services {
   @include wrap-desktop;
   padding-top: 60px;
-  min-height: 673px;
+  min-height: 667px;
 
   &__tab-list {
     @include list-default;
@@ -84,7 +84,7 @@
     padding-left: 22px;
     position: relative;
     margin-bottom: 5px;
-    max-width: 375px;
+    max-width: 395px;
 
     &::before {
       content: "";
@@ -161,6 +161,10 @@
 
   &__block--online {
     padding: 53px 135px 52px 70px;
+
+    .services__advantages-item {
+      max-width: 375px;
+    }
 
     .services__title {
       max-width: 410px;

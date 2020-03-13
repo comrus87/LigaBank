@@ -21,3 +21,26 @@
   margin: 0 auto;
   padding: 0 98px;
 }
+
+@mixin calc-input {
+  display: block;
+  width: 100%;
+  border: 1px solid $black-color;
+  border-radius: 4px;
+  outline: none;
+  font-family: $roboto;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25px;
+  color: $black-color;
+  text-align: center;
+  padding: 18px 50px 15px;
+}
+
+@mixin desc-for-input {
+  font-family: $roboto;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 14px;
+  color: #707c87;
+}
