@@ -21,6 +21,7 @@
 
   &__container {
     display: flex;
+    margin-bottom: 67px;
   }
 
   &__target-column {
@@ -276,6 +277,7 @@
     color: $black-color;
     cursor: pointer;
     padding-left: 24px;
+    display: block;
 
     &::before {
       content: "";
@@ -393,6 +395,193 @@
       width: calc(600 / #{$vw-desktop} * 100vw);
       margin-right: calc(70 / #{$vw-desktop} * 100vw);
     }
-  }
 
+     &__offer-column {
+      width: calc(500 / #{$vw-desktop} * 100vw);
+    }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .calculator {
+    @include wrap-tablet;
+
+    &__title {
+      font-size: 32px;
+      line-height: 32px;
+      margin: 0 0 35px;
+    }
+
+    &__target-title {
+      font-size: 18px;
+      line-height: 25px;
+      margin: 0 0 18px;
+    }
+
+    &__select {
+      margin-bottom: 35px;
+    }
+
+    &__container {
+      flex-direction: column;
+      margin-bottom: 58px;
+    }
+
+    &__target-column {
+      width: 100%;
+      margin-right: 0;
+    }
+
+    &__offer-column {
+    width: 100%;
+    }
+
+    &__mortgage-container,
+    &__avto-container,
+    &__consumer-container {
+
+      .calculator__target-title {
+        margin-bottom: 13px;
+      }
+
+      input[type="text"] {
+        font-size: 16px;
+        line-height: 22px;
+        padding: 19px 50px 17px;
+      }
+    }
+
+    &__initial-pay {
+      margin-top: -5px;
+    }
+
+    &__period {
+      margin-top: 14px;
+      margin-bottom: 19px;
+    }
+
+    &__offer-column {
+      margin-top: 40px;
+      padding-left: 59px;
+    }
+
+    &__offer-item {
+      margin-right: 47px;
+    }
+
+    &__offer-item:nth-child(2n) {
+      margin-right: 47px;
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .calculator {
+    @include wrap-mobile;
+
+    &__title {
+      font-size: 22px;
+      line-height: 22px;
+      margin: 0 0 26px;
+    }
+
+    &__target-title {
+      font-size: 16px;
+      line-height: 22px;
+      margin: 0 0 14px;
+    }
+
+    &__select-title {
+
+      &::before,
+      &::after {
+        right: 16px;
+      }
+    }
+
+    &__select {
+      margin-bottom: 25px;
+    }
+
+    &__container {
+      margin-bottom: 46px;
+    }
+
+    &__mortgage-container,
+    &__avto-container,
+    &__consumer-container {
+
+      .calculator__target-title {
+        margin-bottom: 9px;
+      }
+    }
+
+    &__btn-plus {
+      right: 15px;
+    }
+
+    &__capital input+label,
+    &__kasko input+label,
+    &__insurance input+label,
+    &__participant input+label {
+      font-size: 14px;
+      line-height: 20px;
+
+      &::before {
+        top: 0;
+      }
+    }
+
+    &__capital input:checked+label,
+    &__kasko input:checked+label,
+    &__insurance input:checked+label,
+    &__participant input:checked+label {
+
+      &::after {
+        top: 0;
+      }
+    }
+
+    &__initial-pay {
+      margin-top: -10px;
+    }
+
+    &__period {
+      margin-top: 9px;
+      margin-bottom: 17px;
+    }
+
+    &__offer-column {
+      margin-top: 28px;
+      padding: 35px 15px 40px;
+    }
+
+    &__offer-title {
+      font-size: 18px;
+      line-height: 25px;
+      margin: 0 0 23px;
+    }
+
+    &__offer-item {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 14px;
+
+      span {
+        font-size: 18px;
+        line-height: 25px;
+      }
+
+      h4 {
+        margin: 0;
+      }
+    }
+
+    &__fill-form {
+      font-size: 14px;
+      line-height: 20px;
+      padding: 17px 0 14px;
+      margin-top: 15px;
+    }
+  }
 }

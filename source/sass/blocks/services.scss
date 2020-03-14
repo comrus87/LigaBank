@@ -219,7 +219,7 @@
   .services {
     padding: 0;
     min-height: 380px;
-    padding-bottom: 80px;
+    padding-bottom: 73px;
 
     &__tab-list {
       display: none;
@@ -299,7 +299,7 @@
 
     &__swiper-pagination {
       display: block;
-      margin-bottom: 80px;
+      margin-bottom: 73px;
     }
 
     &__bullet {
@@ -320,7 +320,7 @@
 @media (max-width: $mobile-width) {
   .services {
     min-height: 362px;
-    padding-bottom: 60px;
+    padding-bottom: 58px;
 
     &__picture-tablet {
       display: none;
@@ -406,7 +406,7 @@
     }
 
     &__swiper-pagination {
-      margin-bottom: 53px;
+      margin-bottom: 51px;
     }
 
     &__bullet {

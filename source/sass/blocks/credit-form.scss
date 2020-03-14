@@ -1,0 +1,191 @@
+.credit-form {
+  width: 770px;
+  margin: 0 auto;
+  background-color: $bg-color;
+  padding: 68px 70px 70px;
+
+  &__title {
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 22px;
+    color: $black-color;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 16px;
+  }
+
+  &__list {
+    @include list-default;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    border-bottom: 1px solid #c4c4c4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 13px 0 12px;
+
+    label {
+      font-family: $roboto;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      color: #394959;
+    }
+
+    input {
+      display: block;
+      text-align: right;
+      border: none;
+      background-color: transparent;
+      outline: none;
+      font-family: $roboto;
+      font-weight: 500;
+      font-size: 22px;
+      line-height: 22px;
+      color: $black-color;
+    }
+  }
+
+  &__contacts {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    input {
+      display: block;
+      background-color: transparent;
+      border: 1px solid #0a1e32;
+      border-radius: 4px;
+      font-family: $roboto;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 25px;
+      color: $black-color;
+      outline: none;
+      padding: 18px 24px 15px;
+
+      &::placeholder {
+        font-family: $roboto;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 25px;
+        color: #707c87;
+      }
+    }
+  }
+
+  &__name-input {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  &__phone-input,
+  &__email-input {
+    width: calc(50% - 15px);
+  }
+
+  &__btn-submit {
+    display: block;
+    width: 198px;
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 17px 0 15px;
+    background-color: $blue-color;
+    outline: none;
+    border: none;
+    color: $bg-color;
+    margin: 40px auto 0;
+
+    &:hover,
+    &focus {
+      opacity: 0.7;
+    }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .credit-form {
+    background-color: transparent;
+    width: 100%;
+    padding: 0 0 60px;
+
+    &__title {
+      font-size: 18px;
+      line-height: 18px;
+      margin: 0 0 30px;
+    }
+
+    &__btn-submit {
+      width: 100%;
+      padding-left: 8px;
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .credit-form {
+
+    &__title {
+      font-size: 16px;
+      line-height: 16px;
+      margin: 0 0 23px;
+    }
+
+    &__item {
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 15px 0 14px;
+
+      input {
+        text-align: left;
+        font-size: 18px;
+        line-height: 18px;
+        order: -1;
+      }
+    }
+
+    &__contacts {
+      margin-top: 29px;
+      flex-direction: column;
+
+      input {
+        font-size: 16px;
+        line-height: 22px;
+        padding: 19px 15px 17px;
+
+        &::placeholder {
+          font-size: 16px;
+          line-height: 22px;
+        }
+      }
+    }
+
+    &__phone-input,
+    &__email-input {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    &__name-input {
+      margin-bottom: 0;
+    }
+
+    &__btn-submit {
+      font-size: 14px;
+      line-height: 20px;
+      padding-left: 0;
+      margin-top: 30px;
+    }
+  }
+}
