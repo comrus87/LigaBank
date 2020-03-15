@@ -76,7 +76,7 @@
     position: absolute;
     left: 400px;
     width: 100%;
-    top: 60px;
+    top: 59px;
     left: 0;
     display: none;
     z-index: 10;
@@ -89,24 +89,16 @@
     width: 100%;
     cursor: pointer;
     background-color: #ffffff;
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    cursor: pointer;
+    color: $black-color;
 
     &:hover,
     &:focus {
-      label {
-        opacity: 0.7;
-      }
-    }
-
-    input {
-      display: none;
-    }
-
-    label {
-      font-family: $roboto;
-      font-weight: 500;
-      font-size: 16px;
-      line-height: 22px;
-      cursor: pointer;
+     color: rgba(31, 30, 37, 0.7);
     }
   }
 

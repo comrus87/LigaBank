@@ -160,9 +160,86 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var select = document.querySelector('.calculator__select');
   var selectTitle = document.querySelector('.calculator__select-title');
+  var selectItems = document.querySelectorAll('.calculator__select-item');
+  var selectList = document.querySelector('.calculator__select-list');
+  var mortgageBlock = document.querySelector('.calculator__mortgage-container');
+  var avtoBlock = document.querySelector('.calculator__avto-container');
+  var consumerBlock = document.querySelector('.calculator__consumer-container');
+  var offerBlock = document.querySelector('.calculator__offer-wrap');
+  var creditFormBlock = document.querySelector('.credit-form');
 
-  selectTitle.addEventListener('click', function () {
-    select.classList.toggle('calculator__select--active');
+
+  var state = {
+    modeCredit: null
+  };
+
+  var arrBlocks = [];
+  arrBlocks.push(mortgageBlock, avtoBlock, consumerBlock);
+
+  function hiddenCreditBlocks() {
+    for (var i = 0; i < arrBlocks.length; i++) {
+      arrBlocks[i].style.display = 'none';
+    }
+    offerBlock.style.display = 'none';
+    creditFormBlock.style.display = 'none';
+  }
+
+  hiddenCreditBlocks();
+
+  function toggleSelect(evt) {
+    evt.stopPropagation();
+    if (!select.classList.contains('calculator__select--active')) {
+      select.classList.add('calculator__select--active');
+      document.addEventListener('click', function () {
+        select.classList.remove('calculator__select--active');
+      });
+    } else {
+      select.classList.remove('calculator__select--active');
+    }
+  }
+
+  selectTitle.addEventListener('click', toggleSelect);
+
+  function showCreditBlock(mode) {
+    for (var i = 0; i < arrBlocks.length; i++) {
+      arrBlocks[i].style.display = 'none';
+    }
+    mode.style.display = 'block';
+    offerBlock.style.display = 'block';
+  }
+
+  selectList.addEventListener('click', function (evt) {
+    state.modeCredit = evt.target.getAttribute('data-value');
+    selectTitle.textContent = evt.target.textContent;
+
+    switch (state.modeCredit) {
+      case 'mortgage':
+        showCreditBlock(mortgageBlock);
+        break;
+      case 'avto':
+        showCreditBlock(avtoBlock);
+        break;
+      case 'consumer':
+        showCreditBlock(consumerBlock);
+        break;
+    }
+  });
+
+
+  // иптоека
+
+  var mortgageTotalInput = document.querySelector('.calculator__mortgage-container .calculator__input-total');
+
+  mortgageTotalInput.addEventListener('change', function () {
+    var value = String(mortgageTotalInput.value).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    var lastNumber = value.slice(-1);
+    if () {
+
+    }
+
+
+    mortgageTotalInput.value = value;
+    console.log(value);
   });
 
 

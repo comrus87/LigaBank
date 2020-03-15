@@ -173,18 +173,9 @@
               <div class="calculator__select-title">Выберите цель кредита</div>
 
               <ul class="calculator__select-list">
-                <li class="calculator__select-item">
-                  <input id="select-mortgage" type="radio" name="select-target" value="mortgage">
-                  <label for="select-mortgage">Ипотечное кредитование</label>
-                </li>
-                <li class="calculator__select-item">
-                  <input id="select-avto" type="radio" name="select-target" value="avto">
-                  <label for="select-avto">Автомобильное кредитование</label>
-                </li>
-                <li class="calculator__select-item">
-                  <input id="select-consumer" type="radio" name="select-target" value="consumer">
-                  <label for="select-consumer">Потребительский кредит</label>
-                </li>
+                <li class="calculator__select-item" data-value="mortgage">Ипотечное кредитование</li>
+                <li class="calculator__select-item" data-value="avto">Автомобильное кредитование</li>
+                <li class="calculator__select-item" data-value="consumer">Потребительский кредит</li>
               </ul>
             </div>
 
@@ -228,7 +219,7 @@
 
 <!-- Автомобильный кредит -->
 
-<!--               <div class="calculator__avto-container">
+              <div class="calculator__avto-container">
                 <h3 class="calculator__target-title">Шаг 2. Введите параметры кредита</h3>
 
                 <div class="calculator__total-sum">
@@ -266,11 +257,11 @@
                   <input class="visually-hidden" type="checkbox" id="insurance" name="insurance">
                   <label for="insurance">Оформить Страхование жизни в нашем банке</label>
                 </div>
-              </div> -->
+              </div>
 
 <!-- Потребительский кредит -->
 
-<!--               <div class="calculator__consumer-container">
+              <div class="calculator__consumer-container">
                 <h3 class="calculator__target-title">Шаг 2. Введите параметры кредита</h3>
 
                 <div class="calculator__total-sum">
@@ -297,7 +288,7 @@
                   <input class="visually-hidden" type="checkbox" id="participant" name="participant">
                   <label for="participant">Участник зарплатного проекта нашего банка</label>
                 </div>
-              </div> -->
+              </div>
 
 
           </div>
