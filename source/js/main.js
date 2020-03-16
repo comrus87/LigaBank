@@ -160,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var select = document.querySelector('.calculator__select');
   var selectTitle = document.querySelector('.calculator__select-title');
-  var selectItems = document.querySelectorAll('.calculator__select-item');
+
   var selectList = document.querySelector('.calculator__select-list');
   var mortgageBlock = document.querySelector('.calculator__mortgage-container');
   var avtoBlock = document.querySelector('.calculator__avto-container');
@@ -178,6 +178,7 @@ document.addEventListener('DOMContentLoaded', function () {
       isCapital: false
     }
   };
+
 
   var arrBlocks = [];
   arrBlocks.push(mortgageBlock, avtoBlock, consumerBlock);
@@ -234,30 +235,105 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // иптоека
   var STEP_MORTGAGE = 100000;
-  var mortgageTotalInput = document.querySelector('.calculator__mortgage-container .calculator__input-total');
-  var btnMinus = document.querySelector('.calculator__mortgage-container .calculator__btn-minus');
-  var btnPlus = document.querySelector('.calculator__mortgage-container .calculator__btn-plus');
+  var MIN_PERSENT_MORTGAGE = 10;
+  var MAX_PERSENT_MORTGAGE = 100;
+  var MIN_PERIOD_MORTGAGE = 5;
+  var MAX_PERIOD_MORTGAGE = 30;
+  var mortgageTotalInput = mortgageBlock.querySelector('.calculator__input-total');
+  var mortgageInitialInput = mortgageBlock.querySelector('.calculator__input-initial');
+  var mortgageInitialRange = mortgageBlock.querySelector('.calculator__range-initial');
+  var mortgagePercent = mortgageBlock.querySelector('.calculator__pay-percent');
+  var mortgagePeriodInput = mortgageBlock.querySelector('.calculator__input-period');
 
+  var btnMinus = mortgageBlock.querySelector('.calculator__btn-minus');
+  var btnPlus = mortgageBlock.querySelector('.calculator__btn-plus');
+
+
+  function showCurrency(lastNumber, input, value) {
+    if (lastNumber === '1') {
+      input.value = value.replace(/^0+/, '') + ' рубль';
+    } else if (lastNumber === '2' || lastNumber === '3' || lastNumber === '4') {
+      input.value = value.replace(/^0+/, '') + ' рубля';
+    } else {
+      input.value = value.replace(/^0+/, '') + ' рублей';
+    }
+  }
+
+  function showMortgagePeriod(input, value) {
+    var lastNumber = String(value).slice(-1);
+    var twoLastNumber = String(value).slice(-2);
+
+    if (twoLastNumber === '11' || twoLastNumber === '12' || twoLastNumber === '13' || twoLastNumber === '14') {
+      input.value = String(value).replace(/^0+/, '') + ' лет';
+    } else {
+      if (lastNumber === '1') {
+        input.value = String(value).replace(/^0+/, '') + ' год';
+      } else if (lastNumber === '2' || lastNumber === '3' || lastNumber === '4') {
+        input.value = String(value).replace(/^0+/, '') + ' года';
+      } else {
+        input.value = String(value).replace(/^0+/, '') + ' лет';
+      }
+    }
+  }
+
+  function changeInitialInput(totalValue, persent) {
+    var initialValueNumber = Math.round((totalValue * persent) / 100);
+    var valueString = String(initialValueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+    var lastNumber = valueString.slice(-1);
+    showCurrency(lastNumber, mortgageInitialInput, valueString);
+    state.mortgage.initialPay = initialValueNumber;
+  }
 
   mortgageTotalInput.addEventListener('input', function () {
-    mortgageTotalInput.value = mortgageTotalInput.value.replace(/[^\d]/g, '');
+    mortgageTotalInput.value = mortgageTotalInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     mortgageTotalInput.style.color = '#1f1e25';
     mortgageTotalInput.style.borderColor = '#1f1e25';
   });
 
+  mortgageInitialInput.addEventListener('input', function () {
+    mortgageInitialInput.value = mortgageInitialInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+  });
+
+
+  mortgageInitialRange.addEventListener('change', function () {
+    var valueNumberTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+    changeInitialInput(valueNumberTotal, mortgageInitialRange.value);
+    mortgagePercent.textContent = mortgageInitialRange.value + '%';
+  });
+
+
+  mortgageInitialInput.addEventListener('change', function () {
+    var valueNumber = parseInt(mortgageInitialInput.value.replace(/\D+/g, ''), 10);
+    var valueNumberTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+
+    var percent = (valueNumber * 100) / valueNumberTotal;
+
+    if (percent < MIN_PERSENT_MORTGAGE || !valueNumber) {
+      changeInitialInput(valueNumberTotal, MIN_PERSENT_MORTGAGE);
+      mortgageInitialRange.value = MIN_PERSENT_MORTGAGE;
+    } else if (percent > 100) {
+      changeInitialInput(valueNumberTotal, MAX_PERSENT_MORTGAGE);
+      mortgageInitialRange.value = MAX_PERSENT_MORTGAGE;
+    } else {
+      changeInitialInput(valueNumberTotal, percent);
+      mortgageInitialRange.value = percent;
+    }
+
+    mortgagePercent.textContent = mortgageInitialRange.value + '%';
+  });
+
   mortgageTotalInput.addEventListener('change', function () {
-    var value = String(mortgageTotalInput.value).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-    var lastNumber = value.slice(-1);
-    var valueNumber = +mortgageTotalInput.value;
+    var lastNumber = mortgageTotalInput.value.slice(-1);
+    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
 
     if (valueNumber >= 1200000 && valueNumber <= 25000000) {
-      if (lastNumber === '1') {
-        mortgageTotalInput.value = value.replace(/^0+/, '') + ' рубль';
-      } else if (lastNumber === '2' || lastNumber === '3' || lastNumber === '4') {
-        mortgageTotalInput.value = value.replace(/^0+/, '') + ' рубля';
-      } else {
-        mortgageTotalInput.value = value.replace(/^0+/, '') + ' рублей';
-      }
+      state.mortgage.totalValue = valueNumber;
+
+      changeInitialInput(valueNumber, mortgageInitialRange.value);
+
+      mortgageTotalInput.style.color = '#1f1e25';
+      mortgageTotalInput.style.borderColor = '#1f1e25';
+      showCurrency(lastNumber, mortgageTotalInput, mortgageTotalInput.value);
     } else {
       state.mortgage.totalValue = null;
       mortgageTotalInput.value = 'Некорректное значение';
@@ -266,22 +342,47 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+
   btnMinus.addEventListener('click', function () {
     var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
     var lastNumber = String(valueNumber).slice(-1);
 
-
-    if (valueNumber >= 1200000 && valueNumber <= 25000000) {
+    if (valueNumber >= 1300000) {
       valueNumber -= STEP_MORTGAGE;
-      var value = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+      showCurrency(lastNumber, mortgageTotalInput, valueString);
+      changeInitialInput(valueNumber, mortgageInitialRange.value);
+      state.mortgage.totalValue = valueNumber;
+    }
+  });
 
-      if (lastNumber === '1') {
-        mortgageTotalInput.value = value.replace(/^0+/, '') + ' рубль';
-      } else if (lastNumber === '2' || lastNumber === '3' || lastNumber === '4') {
-        mortgageTotalInput.value = value.replace(/^0+/, '') + ' рубля';
-      } else {
-        mortgageTotalInput.value = value.replace(/^0+/, '') + ' рублей';
-      }
+  btnPlus.addEventListener('click', function () {
+    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+    var lastNumber = String(valueNumber).slice(-1);
+
+    if (valueNumber <= 24900000) {
+      valueNumber += STEP_MORTGAGE;
+      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+      showCurrency(lastNumber, mortgageTotalInput, valueString);
+      changeInitialInput(valueNumber, mortgageInitialRange.value);
+      state.mortgage.totalValue = valueNumber;
+    }
+  });
+
+  // Период ипотеки
+
+  mortgagePeriodInput.addEventListener('input', function () {
+    mortgagePeriodInput.value = mortgagePeriodInput.value.replace(/[^\d]/g, '');
+  });
+
+  mortgagePeriodInput.addEventListener('change', function () {
+    var valueNumber = parseInt(mortgagePeriodInput.value.replace(/\D+/g, ''), 10);
+    if (valueNumber < MIN_PERIOD_MORTGAGE) {
+      mortgagePeriodInput.value = MIN_PERIOD_MORTGAGE + ' лет';
+    } else if (valueNumber > MAX_PERIOD_MORTGAGE) {
+      mortgagePeriodInput.value = MAX_PERIOD_MORTGAGE + ' лет';
+    } else {
+      showMortgagePeriod(mortgagePeriodInput, valueNumber);
     }
   });
 
