@@ -168,15 +168,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var offerBlock = document.querySelector('.calculator__offer-wrap');
   var creditFormBlock = document.querySelector('.credit-form');
 
+  var targetForm = document.querySelector('#target-form');
+
 
   var state = {
-    modeCredit: null,
-    mortgage: {
-      totalValue: 2000000,
-      initialPay: null,
-      period: null,
-      isCapital: false
-    }
+    modeCredit: null
   };
 
 
@@ -213,6 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     mode.style.display = 'block';
     offerBlock.style.display = 'block';
+    creditFormBlock.style.display = 'none';
   }
 
   selectList.addEventListener('click', function (evt) {
@@ -222,12 +219,15 @@ document.addEventListener('DOMContentLoaded', function () {
     switch (state.modeCredit) {
       case 'mortgage':
         showCreditBlock(mortgageBlock);
+        targetForm.value = 'Ипотека';
         break;
       case 'avto':
         showCreditBlock(avtoBlock);
+        targetForm.value = 'Автокредит';
         break;
       case 'consumer':
         showCreditBlock(consumerBlock);
+        targetForm.value = 'Потребительский кредит';
         break;
     }
   });
@@ -235,10 +235,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // иптоека
   var STEP_MORTGAGE = 100000;
+  var MIN_COINT_MORTGAGE = 1200000;
+  var MAX_COINT_MORTGAGE = 25000000;
+  var MIN_COINT_BTN_MORTGAGE = 1300000;
+  var MAX_COINT_BTN_MORTGAGE = 24900000;
+  var MATERNITY_CAPITAL = 470000;
+  var MIN_SUM_MORTGAGE = 500000;
   var MIN_PERSENT_MORTGAGE = 10;
   var MAX_PERSENT_MORTGAGE = 100;
   var MIN_PERIOD_MORTGAGE = 5;
   var MAX_PERIOD_MORTGAGE = 30;
+  var PERCENT_POINT_MORTGAGE = 15;
   var mortgageTotalInput = mortgageBlock.querySelector('.calculator__input-total');
   var mortgageInitialInput = mortgageBlock.querySelector('.calculator__input-initial');
   var mortgageInitialRange = mortgageBlock.querySelector('.calculator__range-initial');
@@ -249,20 +256,32 @@ document.addEventListener('DOMContentLoaded', function () {
   var btnMinus = mortgageBlock.querySelector('.calculator__btn-minus');
   var btnPlus = mortgageBlock.querySelector('.calculator__btn-plus');
 
+  var offer = document.querySelector('.calculator__offer-column');
   var sumOffer = document.querySelector('.calculator__offer-sum');
   var percentOffer = document.querySelector('.calculator__offer-percent');
   var payOffer = document.querySelector('.calculator__offer-pay');
   var requiredOffer = document.querySelector('.calculator__offer-required');
   var maternityCapital = mortgageBlock.querySelector('.calculator__capital input');
 
+  var offerWarning = document.querySelector('.calculator__warning');
 
-  function showCurrency(lastNumber, input, value) {
+  var btnOpenForm = document.querySelector('.calculator__fill-form');
+  var creditForm = document.querySelector('.credit-form');
+
+
+  var totalSumForm = document.querySelector('#total-sum-form');
+  var initialPayForm = document.querySelector('#initial-pay-form');
+  var peroidForm = document.querySelector('#peroid-form');
+
+
+  function showCurrency(value) {
+    var lastNumber = String(value).slice(-1);
     if (lastNumber === '1') {
-      input.value = value.replace(/^0+/, '') + ' рубль';
+      return String(value).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(/^0+/, '') + ' рубль';
     } else if (lastNumber === '2' || lastNumber === '3' || lastNumber === '4') {
-      input.value = value.replace(/^0+/, '') + ' рубля';
+      return String(value).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(/^0+/, '') + ' рубля';
     } else {
-      input.value = value.replace(/^0+/, '') + ' рублей';
+      return String(value).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(/^0+/, '') + ' рублей';
     }
   }
 
@@ -285,9 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function changeInitialInput(totalValue, persent) {
     var initialValueNumber = Math.round((totalValue * persent) / 100);
-    var valueString = String(initialValueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-    var lastNumber = valueString.slice(-1);
-    showCurrency(lastNumber, mortgageInitialInput, valueString);
+    mortgageInitialInput.value = showCurrency(initialValueNumber);
   }
 
   // Общая сумма
@@ -299,16 +316,17 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function onTotalInputChange() {
-    var lastNumber = mortgageTotalInput.value.slice(-1);
     var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
 
-    if (valueNumber >= 1200000 && valueNumber <= 25000000) {
+    if (valueNumber >= MIN_COINT_MORTGAGE && valueNumber <= MAX_COINT_MORTGAGE) {
 
       changeInitialInput(valueNumber, mortgageInitialRange.value);
 
       mortgageTotalInput.style.color = '#1f1e25';
       mortgageTotalInput.style.borderColor = '#1f1e25';
-      showCurrency(lastNumber, mortgageTotalInput, mortgageTotalInput.value);
+
+      mortgageTotalInput.value = showCurrency(valueNumber);
+
     } else {
       mortgageTotalInput.value = 'Некорректное значение';
       mortgageTotalInput.style.color = 'red';
@@ -322,26 +340,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function onBtnMinusClick() {
     var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
-    var lastNumber = String(valueNumber).slice(-1);
 
-    if (valueNumber >= 1300000) {
+    if (valueNumber >= MIN_COINT_BTN_MORTGAGE) {
       valueNumber -= STEP_MORTGAGE;
-      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-      showCurrency(lastNumber, mortgageTotalInput, valueString);
+      mortgageTotalInput.value = showCurrency(valueNumber);
       changeInitialInput(valueNumber, mortgageInitialRange.value);
+      onMortgageCalcChange();
     }
-    calcMortgageSum();
   }
 
   function onBtnPlusClick() {
     var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
-    var lastNumber = String(valueNumber).slice(-1);
 
-    if (valueNumber <= 24900000) {
+    if (valueNumber <= MAX_COINT_BTN_MORTGAGE) {
       valueNumber += STEP_MORTGAGE;
-      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-      showCurrency(lastNumber, mortgageTotalInput, valueString);
+
+      mortgageTotalInput.value = showCurrency(valueNumber);
       changeInitialInput(valueNumber, mortgageInitialRange.value);
+      onMortgageCalcChange();
     }
   }
 
@@ -415,27 +431,58 @@ document.addEventListener('DOMContentLoaded', function () {
   mortgagePeriodInput.addEventListener('change', onPeriodInputChange);
   mortgagePeriodRange.addEventListener('change', onPeriodRange);
 
-
   // Блок предложение
 
-  // mortgageBlock.addEventListener('change', function () {
-  //   console.log('Произошло изменение');
-  // });
-  function calcMortgageSum() {
+
+  function onMortgageCalcChange() {
     var valueTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
     var valueInitial = parseInt(mortgageInitialInput.value.replace(/\D+/g, ''), 10);
-    var mortgageSum = 0;
+    var valueInitialRange = mortgageInitialRange.value;
+    var valuePeriod = parseInt(mortgagePeriodInput.value.replace(/\D+/g, ''), 10);
+
+    var mortgageSum;
+    var percentRate;
+
     if (maternityCapital.checked) {
-      mortgageSum = valueTotal - valueInitial - 470000;
+      mortgageSum = valueTotal - valueInitial - MATERNITY_CAPITAL;
     } else {
       mortgageSum = valueTotal - valueInitial;
     }
 
-    // mortgageSum.textContent = String(mortgageSum).
+    if (mortgageSum < MIN_SUM_MORTGAGE) {
+      offer.style.display = 'none';
+      offerWarning.style.display = 'block';
+    } else {
+      offer.style.display = 'block';
+      offerWarning.style.display = 'none';
+    }
 
-    //  >>> уточнить
-    // console.log(valueTotal, valueInitial, mortgageSum);
+    if (valueInitialRange < PERCENT_POINT_MORTGAGE) {
+      percentRate = 9.4 / 1200;
+      percentOffer.textContent = '9,40%';
+    } else {
+      percentRate = 8.5 / 1200;
+      percentOffer.textContent = '8,50%';
+    }
+
+    sumOffer.textContent = showCurrency(mortgageSum);
+
+    var monthlyPow = valuePeriod * 12;
+    var monthlyPay = mortgageSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
+    var requiredProfit = monthlyPay * 100 / 45;
+
+    payOffer.textContent = showCurrency(monthlyPay.toFixed());
+    requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
+
+    totalSumForm.value = mortgageTotalInput.value;
+    initialPayForm.value = mortgageInitialInput.value;
+    peroidForm.value = mortgagePeriodInput.value;
   }
 
+  mortgageBlock.addEventListener('change', onMortgageCalcChange);
+
+  btnOpenForm.addEventListener('click', function () {
+    creditForm.style.display = 'block';
+  });
 
 });

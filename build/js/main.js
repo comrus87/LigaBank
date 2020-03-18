@@ -250,7 +250,10 @@ document.addEventListener('DOMContentLoaded', function () {
   var btnPlus = mortgageBlock.querySelector('.calculator__btn-plus');
 
   var sumOffer = document.querySelector('.calculator__offer-sum');
-  var sumOffer = document.querySelector('.calculator__offer-sum');
+  var percentOffer = document.querySelector('.calculator__offer-percent');
+  var payOffer = document.querySelector('.calculator__offer-pay');
+  var requiredOffer = document.querySelector('.calculator__offer-required');
+  var maternityCapital = mortgageBlock.querySelector('.calculator__capital input');
 
 
   function showCurrency(lastNumber, input, value) {
@@ -285,28 +288,80 @@ document.addEventListener('DOMContentLoaded', function () {
     var valueString = String(initialValueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     var lastNumber = valueString.slice(-1);
     showCurrency(lastNumber, mortgageInitialInput, valueString);
-    state.mortgage.initialPay = initialValueNumber;
   }
 
-  mortgageTotalInput.addEventListener('input', function () {
+  // Общая сумма
+
+  function onTotalInput() {
     mortgageTotalInput.value = mortgageTotalInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     mortgageTotalInput.style.color = '#1f1e25';
     mortgageTotalInput.style.borderColor = '#1f1e25';
-  });
+  }
 
-  mortgageInitialInput.addEventListener('input', function () {
-    mortgageInitialInput.value = mortgageInitialInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-  });
+  function onTotalInputChange() {
+    var lastNumber = mortgageTotalInput.value.slice(-1);
+    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+
+    if (valueNumber >= 1200000 && valueNumber <= 25000000) {
+
+      changeInitialInput(valueNumber, mortgageInitialRange.value);
+
+      mortgageTotalInput.style.color = '#1f1e25';
+      mortgageTotalInput.style.borderColor = '#1f1e25';
+      showCurrency(lastNumber, mortgageTotalInput, mortgageTotalInput.value);
+    } else {
+      mortgageTotalInput.value = 'Некорректное значение';
+      mortgageTotalInput.style.color = 'red';
+      mortgageTotalInput.style.borderColor = 'red';
+    }
+
+  }
+
+  mortgageTotalInput.addEventListener('input', onTotalInput);
+  mortgageTotalInput.addEventListener('change', onTotalInputChange);
+
+  function onBtnMinusClick() {
+    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+    var lastNumber = String(valueNumber).slice(-1);
+
+    if (valueNumber >= 1300000) {
+      valueNumber -= STEP_MORTGAGE;
+      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+      showCurrency(lastNumber, mortgageTotalInput, valueString);
+      changeInitialInput(valueNumber, mortgageInitialRange.value);
+    }
+    calcMortgageSum();
+  }
+
+  function onBtnPlusClick() {
+    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+    var lastNumber = String(valueNumber).slice(-1);
+
+    if (valueNumber <= 24900000) {
+      valueNumber += STEP_MORTGAGE;
+      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+      showCurrency(lastNumber, mortgageTotalInput, valueString);
+      changeInitialInput(valueNumber, mortgageInitialRange.value);
+    }
+  }
+
+  btnMinus.addEventListener('click', onBtnMinusClick);
+  btnPlus.addEventListener('click', onBtnPlusClick);
 
 
-  mortgageInitialRange.addEventListener('change', function () {
+  // Первоначальный взнос
+
+  function onInitialRangeChange() {
     var valueNumberTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
     changeInitialInput(valueNumberTotal, mortgageInitialRange.value);
     mortgagePercent.textContent = mortgageInitialRange.value + '%';
-  });
+  }
 
+  function onInitialInput() {
+    mortgageInitialInput.value = mortgageInitialInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+  }
 
-  mortgageInitialInput.addEventListener('change', function () {
+  function onInitialInputChange() {
     var valueNumber = parseInt(mortgageInitialInput.value.replace(/\D+/g, ''), 10);
     var valueNumberTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
 
@@ -324,62 +379,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     mortgagePercent.textContent = mortgageInitialRange.value + '%';
-  });
+  }
 
-  mortgageTotalInput.addEventListener('change', function () {
-    var lastNumber = mortgageTotalInput.value.slice(-1);
-    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+  mortgageInitialInput.addEventListener('input', onInitialInput);
+  mortgageInitialInput.addEventListener('change', onInitialInputChange);
+  mortgageInitialRange.addEventListener('change', onInitialRangeChange);
 
-    if (valueNumber >= 1200000 && valueNumber <= 25000000) {
-      state.mortgage.totalValue = valueNumber;
-
-      changeInitialInput(valueNumber, mortgageInitialRange.value);
-
-      mortgageTotalInput.style.color = '#1f1e25';
-      mortgageTotalInput.style.borderColor = '#1f1e25';
-      showCurrency(lastNumber, mortgageTotalInput, mortgageTotalInput.value);
-    } else {
-      state.mortgage.totalValue = null;
-      mortgageTotalInput.value = 'Некорректное значение';
-      mortgageTotalInput.style.color = 'red';
-      mortgageTotalInput.style.borderColor = 'red';
-    }
-  });
-
-
-  btnMinus.addEventListener('click', function () {
-    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
-    var lastNumber = String(valueNumber).slice(-1);
-
-    if (valueNumber >= 1300000) {
-      valueNumber -= STEP_MORTGAGE;
-      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-      showCurrency(lastNumber, mortgageTotalInput, valueString);
-      changeInitialInput(valueNumber, mortgageInitialRange.value);
-      state.mortgage.totalValue = valueNumber;
-    }
-  });
-
-  btnPlus.addEventListener('click', function () {
-    var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
-    var lastNumber = String(valueNumber).slice(-1);
-
-    if (valueNumber <= 24900000) {
-      valueNumber += STEP_MORTGAGE;
-      var valueString = String(valueNumber).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
-      showCurrency(lastNumber, mortgageTotalInput, valueString);
-      changeInitialInput(valueNumber, mortgageInitialRange.value);
-      state.mortgage.totalValue = valueNumber;
-    }
-  });
 
   // Период ипотеки
 
-  mortgagePeriodInput.addEventListener('input', function () {
+  function onPeriodInput() {
     mortgagePeriodInput.value = mortgagePeriodInput.value.replace(/[^\d]/g, '');
-  });
+  }
 
-  mortgagePeriodInput.addEventListener('change', function () {
+  function onPeriodInputChange() {
     var valueNumber = parseInt(mortgagePeriodInput.value.replace(/\D+/g, ''), 10);
     if (valueNumber < MIN_PERIOD_MORTGAGE || !valueNumber) {
       mortgagePeriodInput.value = MIN_PERIOD_MORTGAGE + ' лет';
@@ -391,16 +404,38 @@ document.addEventListener('DOMContentLoaded', function () {
       showMortgagePeriod(mortgagePeriodInput, valueNumber);
       mortgagePeriodRange.value = valueNumber;
     }
+  }
 
-  });
-
-  mortgagePeriodRange.addEventListener('change', function () {
+  function onPeriodRange() {
     var valueNumber = parseInt(mortgagePeriodRange.value.replace(/\D+/g, ''), 10);
     showMortgagePeriod(mortgagePeriodInput, valueNumber);
-  });
+  }
+
+  mortgagePeriodInput.addEventListener('input', onPeriodInput);
+  mortgagePeriodInput.addEventListener('change', onPeriodInputChange);
+  mortgagePeriodRange.addEventListener('change', onPeriodRange);
 
 
   // Блок предложение
+
+  // mortgageBlock.addEventListener('change', function () {
+  //   console.log('Произошло изменение');
+  // });
+  function calcMortgageSum() {
+    var valueTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
+    var valueInitial = parseInt(mortgageInitialInput.value.replace(/\D+/g, ''), 10);
+    var mortgageSum = 0;
+    if (maternityCapital.checked) {
+      mortgageSum = valueTotal - valueInitial - 470000;
+    } else {
+      mortgageSum = valueTotal - valueInitial;
+    }
+
+    // mortgageSum.textContent = String(mortgageSum).
+
+    //  >>> уточнить
+    // console.log(valueTotal, valueInitial, mortgageSum);
+  }
 
 
 });

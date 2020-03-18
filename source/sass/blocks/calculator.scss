@@ -306,20 +306,36 @@
     margin-bottom: 4px;
   }
 
-  &__offer-column {
+  &__offer-column,
+  &__warning {
     width: 500px;
     background-color: $bg-color;
     padding: 53px 60px 60px 58px;
     margin-top: 7px;
   }
 
-  &__offer-title {
+  &__warning {
+    display: none;
+  }
+
+  &__offer-title,
+  &__warning-title {
     font-family: $roboto;
     font-weight: 500;
     font-size: 22px;
     line-height: 31px;
     color: $black-color;
     margin: 0 0 24px;
+  }
+
+  &__warning-subtitle {
+    margin: 0;
+    font-family: $roboto;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: #394959;
+    width: 255px;
   }
 
   &__offer-list {
