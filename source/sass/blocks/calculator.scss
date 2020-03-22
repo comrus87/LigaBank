@@ -46,6 +46,7 @@
     padding: 19px 24px 17px;
     border: 1px solid $black-color;
     cursor: pointer;
+    z-index: 15;
 
     &:hover,
     &:focus {
@@ -269,7 +270,7 @@
     color: $black-color;
     cursor: pointer;
     padding-left: 24px;
-    display: block;
+    display: inline-block;
 
     &::before {
       content: "";
@@ -310,7 +311,7 @@
   &__warning {
     width: 500px;
     background-color: $bg-color;
-    padding: 53px 60px 60px 58px;
+    padding: 53px 50px 60px 58px;
     margin-top: 7px;
   }
 
@@ -369,13 +370,13 @@
   }
 
   &__offer-item:nth-child(2n) {
-    width: 156px;
+    width: 166px;
     margin-right: 0;
   }
 
   &__fill-form {
     display: block;
-    width: 100%;
+    width: calc(100% - 10px);
     font-family: $roboto;
     font-weight: 500;
     font-size: 16px;
@@ -404,8 +405,13 @@
       margin-right: calc(70 / #{$vw-desktop} * 100vw);
     }
 
-     &__offer-column {
+    &__offer-column,
+    &__warning {
       width: calc(500 / #{$vw-desktop} * 100vw);
+    }
+
+    &__fill-form {
+      width: 100%;
     }
   }
 }
@@ -440,10 +446,6 @@
       margin-right: 0;
     }
 
-    &__offer-column {
-    width: 100%;
-    }
-
     &__mortgage-container,
     &__avto-container,
     &__consumer-container {
@@ -468,9 +470,15 @@
       margin-bottom: 19px;
     }
 
-    &__offer-column {
+    &__offer-column,
+    &__warning {
+      width: 100%;
       margin-top: 40px;
       padding-left: 59px;
+    }
+
+    &__warning-title {
+      width: 350px;
     }
 
     &__offer-item {
@@ -559,15 +567,21 @@
       margin-bottom: 17px;
     }
 
-    &__offer-column {
+    &__offer-column,
+    &__warning {
       margin-top: 28px;
       padding: 35px 15px 40px;
     }
 
-    &__offer-title {
+    &__offer-title,
+    &__warning-title {
       font-size: 18px;
       line-height: 25px;
       margin: 0 0 23px;
+    }
+
+    &__warning-title {
+      width: 210px;
     }
 
     &__offer-item {

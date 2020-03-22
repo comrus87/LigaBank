@@ -1,17 +1,18 @@
 .modal-success {
+  display: none;
   width: 500px;
   background-color: $bg-color;
   position: fixed;
-  z-index: 10;
+  z-index: 50;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  padding: 58px 68px 56px;
+  padding: 58px 67px 52px;
 
   &__btn-close {
     position: absolute;
-    right: 55px;
-    top: 55px;
+    right: 24px;
+    top: 24px;
     width: 17px;
     height: 17px;
     border: none;
@@ -61,6 +62,8 @@
     line-height: 22px;
     color: $black-color;
     margin: 0 0 20px;
+    display: flex;
+    justify-content: center;
   }
 
   &__subtitle {
@@ -70,6 +73,56 @@
     line-height: 22px;
     color: #394959;
     margin: 0;
+    width: 295px;
+    margin: 0 auto;
+    text-align: center;
   }
+}
 
+.overlay-success {
+  @include overlay;
+}
+
+@media (max-width: $tablet-width) {
+  .modal-success {
+    width: 678px;
+
+     &__btn-close {
+      right: 30px;
+      top: 30px;
+     }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .modal-success {
+    width: calc(100% - 30px);
+    padding: 32px 26px;
+
+    &__btn-close {
+      right: 15px;
+      top: 15px;
+      width: 14px;
+      height: 14px;
+
+      &::before,
+      &::after {
+        width: 19px;
+        height: 2px;
+        top: 6px;
+      }
+     }
+
+    &__title {
+      font-size: 18px;
+      line-height: 25px;
+      text-align: center;
+    }
+
+    &__subtitle {
+      font-size: 16px;
+      line-height: 22px;
+      width: 100%;
+    }
+  }
 }

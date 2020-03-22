@@ -44,3 +44,13 @@
   line-height: 14px;
   color: #707c87;
 }
+
+@mixin overlay {
+  position: fixed;
+  display: none;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 30;
+}

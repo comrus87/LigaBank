@@ -235,7 +235,7 @@
                 <div class="calculator__initial-pay">
                   <h4>Первоначальный взнос</h4>
                   <input class="calculator__input-initial" type="text" name="initial-pay" value="200 000 рублей">
-                  <input type="range" name="initial-pay-range" min="20" max="100" step="5" value="20">
+                  <input class="calculator__range-initial" type="range" name="initial-pay-range" min="20" max="100" step="5" value="20">
                   <span class="calculator__pay-percent">20%</span>
                 </div>
 
@@ -276,8 +276,8 @@
 
                 <div class="calculator__period">
                   <h4>Срок кредитования</h4>
-                  <input type="text" name="period" value="1 год">
-                  <input type="range" name="period-range" min="1" max="7" step="1" value="1">
+                  <input class="calculator__input-period" type="text" name="period" value="1 год">
+                  <input class="calculator__range-period" type="range" name="period-range" min="1" max="7" step="1" value="1">
                   <div class="calculator__period-container">
                     <span class="calculator__min-period">1 год</span>
                     <span class="calculator__max-period">7 лет</span>
@@ -299,7 +299,7 @@
               <ul class="calculator__offer-list">
                 <li class="calculator__offer-item">
                   <span class="calculator__offer-sum">1 330 000 рублей</span>
-                  <h4>Сумма ипотеки</h4>
+                  <h4 class="calculator__offer-sum-title">Сумма ипотеки</h4>
                 </li>
                 <li class="calculator__offer-item">
                   <span class="calculator__offer-percent">9,40%</span>
@@ -362,7 +362,6 @@
     </section>
 
 
-
   </main>
 
   <footer>
@@ -389,10 +388,12 @@
     </div>
   </div>
 
-  <div class="modal-success">
-    <button class="modal-success__btn-close" type="button" aria-label="Закрыть"></button>
-    <p class="modal-success__title">Спасибо за обращение в наш банк.</p>
-    <p class="modal-success__subtitle">Наш менеджер скоро свяжется с вами по указанному номеру телефона.</p>
+  <div class="overlay-success">
+    <div class="modal-success">
+      <button class="modal-success__btn-close" type="button" aria-label="Закрыть"></button>
+      <p class="modal-success__title">Спасибо за обращение в наш банк.</p>
+      <p class="modal-success__subtitle">Наш менеджер скоро свяжется с вами по указанному номеру телефона.</p>
+    </div>
   </div>
 
 
