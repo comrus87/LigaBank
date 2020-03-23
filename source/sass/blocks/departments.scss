@@ -1,0 +1,65 @@
+.departments {
+  @include wrap-desktop;
+
+  &__title {
+    font-family: $roboto;
+    font-weight: 700;
+    font-size: 41px;
+    line-height: 57px;
+    color: $black-color;
+    margin: 0;
+  }
+
+  &__filter-form {
+    background-color: $bg-color;
+    display: flex;
+    justify-content: center;
+    padding: 36px 0 30px;
+    border-bottom: 1px solid #c1c2ca;
+
+    input+label {
+      font-family: $roboto;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 14px;
+      color: $black-color;
+      padding-left: 26px;
+      margin-right: 30px;
+      cursor: pointer;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 16px;
+        height: 16px;
+        border: 1px solid $blue-color;
+        border-radius: 2px;
+        left: 0;
+        top: -2px;
+      }
+    }
+
+    input:checked+label {
+
+      &::after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 16px;
+        height: 16px;
+        background: url("../img/checkbox.png") no-repeat center;
+        background-size: cover;
+        left: 0;
+        top: -2px;
+      }
+    }
+  }
+
+  &__map {
+    width: 100%;
+    height: 462px;
+  }
+
+}

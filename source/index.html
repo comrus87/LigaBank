@@ -6,6 +6,7 @@
   <meta name="description" content="Лига Банк">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Лига Банк</title>
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=a021498a-88d5-484c-854f-5645d1c25086&lang=ru_RU"></script>
   <link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
   <link rel="stylesheet" href="css/style.min.css">
 </head>
@@ -359,6 +360,25 @@
             <button class="credit-form__btn-submit" type="submit">Отправить</button>
           </form>
         </div>
+    </section>
+
+    <section class="departments">
+      <h2 class="departments__title">Отделения Лига Банка</h2>
+      <div class="departments__container">
+        <form class="departments__filter-form">
+          <input class="visually-hidden" type="checkbox" id="russia" name="russia">
+          <label for="russia">Россия</label>
+
+          <input class="visually-hidden" type="checkbox" id="sng" name="sng">
+          <label for="sng">СНГ</label>
+
+          <input class="visually-hidden" type="checkbox" id="europe" name="europe">
+          <label for="europe">Европа</label>
+        </form>
+
+        <div class="departments__map" id="map">
+        </div>
+      </div>
     </section>
 
 

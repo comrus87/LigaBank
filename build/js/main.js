@@ -166,16 +166,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var avtoBlock = document.querySelector('.calculator__avto-container');
   var consumerBlock = document.querySelector('.calculator__consumer-container');
   var offerBlock = document.querySelector('.calculator__offer-wrap');
-
   var creditFormBlock = document.querySelector('.credit-form');
   var targetForm = document.querySelector('#target-form');
   var totalSumForm = document.querySelector('#total-sum-form');
   var initialPayForm = document.querySelector('#initial-pay-form');
   var periodForm = document.querySelector('#period-form');
-
   var offer = document.querySelector('.calculator__offer-column');
   var sumOfferTitle = document.querySelector('.calculator__offer-sum-title');
-
   var sumOffer = document.querySelector('.calculator__offer-sum');
   var percentOffer = document.querySelector('.calculator__offer-percent');
   var payOffer = document.querySelector('.calculator__offer-pay');
@@ -246,6 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
         showCreditBlock(consumerBlock);
         targetForm.value = 'Потребительский кредит';
         sumOfferTitle.textContent = 'Сумму кредита';
+        onConsumerCalcChange();
         break;
     }
   });
@@ -263,13 +261,11 @@ document.addEventListener('DOMContentLoaded', function () {
   var MAX_PERIOD_MORTGAGE = 30;
   var PERCENT_POINT_MORTGAGE = 15;
   var MAX_PERSENT = 100;
-
   var mortgageTotalInput = mortgageBlock.querySelector('.calculator__input-total');
   var mortgageInitialInput = mortgageBlock.querySelector('.calculator__input-initial');
   var mortgageInitialRange = mortgageBlock.querySelector('.calculator__range-initial');
   var mortgagePeriodInput = mortgageBlock.querySelector('.calculator__input-period');
   var maternityCapital = mortgageBlock.querySelector('.calculator__capital input');
-
   var mortgagePayPercent = mortgageBlock.querySelector('.calculator__pay-percent');
   var mortgagePeriodRange = mortgageBlock.querySelector('.calculator__range-period');
   var mortgageBtnMinus = mortgageBlock.querySelector('.calculator__btn-minus');
@@ -461,7 +457,6 @@ document.addEventListener('DOMContentLoaded', function () {
     var valueInitial = parseInt(mortgageInitialInput.value.replace(/\D+/g, ''), 10);
     var valueInitialRange = parseInt(mortgageInitialRange.value.replace(/\D+/g, ''), 10);
     var valuePeriod = parseInt(mortgagePeriodInput.value.replace(/\D+/g, ''), 10);
-
     var mortgageSum;
     var percentRate;
 
@@ -565,12 +560,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var MAX_COINT_BTN_AVTO = MAX_COINT_AVTO - STEP_AVTO;
   var MIN_SUM_AVTO = 200000;
   var MIN_PERSENT_AVTO = 20;
-
   var MIN_PERIOD_AVTO = 1;
   var MAX_PERIOD_AVTO = 5;
-
   var COINT_POINT_AVTO = 2000000;
-
   var avtoTotalInput = avtoBlock.querySelector('.calculator__input-total');
   var avtoInitialInput = avtoBlock.querySelector('.calculator__input-initial');
   var avtoInitialRange = avtoBlock.querySelector('.calculator__range-initial');
@@ -579,7 +571,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var avtoPayPercent = avtoBlock.querySelector('.calculator__pay-percent');
   var avtoBtnMinus = avtoBlock.querySelector('.calculator__btn-minus');
   var avtoBtnPlus = avtoBlock.querySelector('.calculator__btn-plus');
-
   var kasko = avtoBlock.querySelector('.calculator__kasko input');
   var insurance = avtoBlock.querySelector('.calculator__insurance input');
 
@@ -720,10 +711,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var MAX_COINT_BTN_CONSUMER = MAX_COINT_CONSUMER - STEP_CONSUMER;
   var MIN_PERIOD_CONSUMER = 1;
   var MAX_PERIOD_CONSUMER = 7;
-
   var FIRST_POINT_CONSUMER = 750000;
   var SECOND_POINT_CONSUMER = 2000000;
-
   var consumerTotalInput = consumerBlock.querySelector('.calculator__input-total');
   var consumerPeriodInput = consumerBlock.querySelector('.calculator__input-period');
   var consumerPeriodRange = consumerBlock.querySelector('.calculator__range-period');
@@ -799,15 +788,15 @@ document.addEventListener('DOMContentLoaded', function () {
   // Блок предложение (потреб)
 
   function onConsumerCalcChange() {
-    var avtoSum = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
-    var valuePeriod = parseInt(avtoPeriodInput.value.replace(/\D+/g, ''), 10);
+    var consumerSum = parseInt(consumerTotalInput.value.replace(/\D+/g, ''), 10);
+    var valuePeriod = parseInt(consumerPeriodInput.value.replace(/\D+/g, ''), 10);
 
     var percentRate;
 
-    if (avtoSum < FIRST_POINT_CONSUMER) {
+    if (consumerSum < FIRST_POINT_CONSUMER) {
       percentRate = 15;
       percentOffer.textContent = '15%';
-    } else if (avtoSum >= FIRST_POINT_CONSUMER && avtoSum < SECOND_POINT_CONSUMER) {
+    } else if (consumerSum >= FIRST_POINT_CONSUMER && consumerSum < SECOND_POINT_CONSUMER) {
       percentRate = 12.5;
       percentOffer.textContent = '12,5%';
     } else {
@@ -823,17 +812,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
     percentRate = percentRate / 1200;
 
-    sumOffer.textContent = showCurrency(avtoSum);
+    sumOffer.textContent = showCurrency(consumerSum);
 
     var monthlyPow = valuePeriod * 12;
-    var monthlyPay = avtoSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
+    var monthlyPay = consumerSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
     var requiredProfit = monthlyPay * 100 / 45;
 
     payOffer.textContent = showCurrency(monthlyPay.toFixed());
     requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
 
     totalSumForm.value = consumerTotalInput.value;
-    // initialPayForm.value = avtoInitialInput.value;
+    initialPayForm.value = 'отсутствует';
     periodForm.value = consumerPeriodInput.value;
   }
 
