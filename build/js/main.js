@@ -822,10 +822,42 @@ document.addEventListener('DOMContentLoaded', function () {
     requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
 
     totalSumForm.value = consumerTotalInput.value;
-    initialPayForm.value = 'отсутствует';
+    initialPayForm.value = '0';
     periodForm.value = consumerPeriodInput.value;
   }
 
   consumerBlock.addEventListener('change', onConsumerCalcChange);
+
+  // Карта
+
+  ymaps.ready(init);
+
+  function init() {
+    var myMap = new ymaps.Map("map", {
+      center: [55.45, 37.36],
+      zoom: 3
+    });
+
+    var coordsRussia = [
+      [55.4507, 37.3656],
+      [59.57, 30.19],
+      [51.54, 46.00],
+      [67.36, 33.40],
+      [57.09, 65.31],
+      [54.99, 73.36]
+    ];
+
+    var myCollection = new ymaps.GeoObjectCollection({}, {
+      iconLayout: 'default#image',
+      iconImageHref: 'img/marker.png',
+    });
+
+    for (var i = 0; i < coordsRussia.length; i++) {
+      myCollection.add(new ymaps.Placemark(coordsRussia[i]));
+    }
+
+    myMap.geoObjects.add(myCollection);
+
+  }
 
 });

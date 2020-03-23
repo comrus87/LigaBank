@@ -835,28 +835,56 @@ document.addEventListener('DOMContentLoaded', function () {
   function init() {
     var myMap = new ymaps.Map("map", {
       center: [55.45, 37.36],
-      zoom: 3
+      zoom: 3,
+      controls: []
     });
 
     var coordsRussia = [
-      [55.45, 37.36],
-      [59.57, 30.19],
+      [55.75, 37.61],
+      [59.93, 30.31],
       [51.54, 46.00],
-      [67.36, 33.40],
-      [57.09, 65.31],
+      [67.61, 33.66],
+      [57.15, 65.53],
       [54.99, 73.36]
     ];
 
-    var myCollection = new ymaps.GeoObjectCollection({}, {
+    var coordsSNG = [
+      [40.36, 49.83],
+      [41.31, 69.27],
+      [53.90, 27.56],
+      [43.23, 76.94]
+    ];
+
+    var coordsEurope = [
+      [48.85, 2.35],
+      [50.08, 14.42],
+      [51.50, -0.12],
+      [41.90, 12.49]
+    ];
+
+    var russiaCollection = new ymaps.GeoObjectCollection({}, {
       iconLayout: 'default#image',
       iconImageHref: 'img/marker.png',
     });
 
     for (var i = 0; i < coordsRussia.length; i++) {
-      myCollection.add(new ymaps.Placemark(coordsRussia[i]));
+      russiaCollection.add(new ymaps.Placemark(coordsRussia[i]));
     }
 
-    myMap.geoObjects.add(myCollection);
+    myMap.geoObjects.add(russiaCollection);
+
+    // myMap.controls.add('zoomControl', {
+    //   size: 'small',
+    //   float: 'none',
+    //   position: {
+    //     bottom: '50px',
+    //     right: '30px'
+    //   }
+    // });
+
+    // myMap.controls.add('geolocationControl', {
+    //   geolocationControlFloat: 'right'
+    // });
 
   }
 

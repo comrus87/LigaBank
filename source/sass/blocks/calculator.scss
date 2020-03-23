@@ -21,7 +21,6 @@
 
   &__container {
     display: flex;
-    margin-bottom: 67px;
   }
 
   &__target-column {
@@ -438,7 +437,6 @@
 
     &__container {
       flex-direction: column;
-      margin-bottom: 58px;
     }
 
     &__target-column {
@@ -508,6 +506,7 @@
     }
 
     &__select-title {
+      padding: 19px 14px 17px;
 
       &::before,
       &::after {
@@ -517,10 +516,6 @@
 
     &__select {
       margin-bottom: 25px;
-    }
-
-    &__container {
-      margin-bottom: 46px;
     }
 
     &__mortgage-container,
