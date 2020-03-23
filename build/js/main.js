@@ -173,6 +173,17 @@ document.addEventListener('DOMContentLoaded', function () {
   var initialPayForm = document.querySelector('#initial-pay-form');
   var periodForm = document.querySelector('#period-form');
 
+  var offer = document.querySelector('.calculator__offer-column');
+  var sumOfferTitle = document.querySelector('.calculator__offer-sum-title');
+
+  var sumOffer = document.querySelector('.calculator__offer-sum');
+  var percentOffer = document.querySelector('.calculator__offer-percent');
+  var payOffer = document.querySelector('.calculator__offer-pay');
+  var requiredOffer = document.querySelector('.calculator__offer-required');
+  var offerWarning = document.querySelector('.calculator__warning');
+  var offerWarningTitle = document.querySelector('.calculator__warning-title');
+  var btnOpenForm = document.querySelector('.calculator__fill-form');
+
   var state = {
     modeCredit: null
   };
@@ -222,14 +233,19 @@ document.addEventListener('DOMContentLoaded', function () {
       case 'mortgage':
         showCreditBlock(mortgageBlock);
         targetForm.value = 'Ипотека';
+        sumOfferTitle.textContent = 'Сумма ипотеки';
+        onMortgageCalcChange();
         break;
       case 'avto':
         showCreditBlock(avtoBlock);
         targetForm.value = 'Автокредит';
+        sumOfferTitle.textContent = 'Сумму автокредита';
+        onAvtoCalcChange();
         break;
       case 'consumer':
         showCreditBlock(consumerBlock);
         targetForm.value = 'Потребительский кредит';
+        sumOfferTitle.textContent = 'Сумму кредита';
         break;
     }
   });
@@ -238,8 +254,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var STEP_MORTGAGE = 100000;
   var MIN_COINT_MORTGAGE = 1200000;
   var MAX_COINT_MORTGAGE = 25000000;
-  var MIN_COINT_BTN_MORTGAGE = 1300000;
-  var MAX_COINT_BTN_MORTGAGE = 24900000;
+  var MIN_COINT_BTN_MORTGAGE = MIN_COINT_MORTGAGE + STEP_MORTGAGE;
+  var MAX_COINT_BTN_MORTGAGE = MAX_COINT_MORTGAGE - STEP_MORTGAGE;
   var MATERNITY_CAPITAL = 470000;
   var MIN_SUM_MORTGAGE = 500000;
   var MIN_PERSENT_MORTGAGE = 10;
@@ -259,16 +275,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var mortgageBtnMinus = mortgageBlock.querySelector('.calculator__btn-minus');
   var mortgageBtnPlus = mortgageBlock.querySelector('.calculator__btn-plus');
 
-
-  var offer = document.querySelector('.calculator__offer-column');
-  var sumOffer = document.querySelector('.calculator__offer-sum');
-  var percentOffer = document.querySelector('.calculator__offer-percent');
-  var payOffer = document.querySelector('.calculator__offer-pay');
-  var requiredOffer = document.querySelector('.calculator__offer-required');
-
-
-  var offerWarning = document.querySelector('.calculator__warning');
-  var btnOpenForm = document.querySelector('.calculator__fill-form');
 
   function showCurrency(value) {
     var lastNumber = String(value).slice(-1);
@@ -306,10 +312,10 @@ document.addEventListener('DOMContentLoaded', function () {
     totalInput.style.borderColor = '#1f1e25';
   }
 
-  function changeTotalInput(totalInput, initialRangeValue, initialInput) {
+  function changeTotalInput(totalInput, initialRangeValue, initialInput, minCoint, maxCoint) {
     var valueNumber = parseInt(totalInput.value.replace(/\D+/g, ''), 10);
 
-    if (valueNumber >= MIN_COINT_MORTGAGE && valueNumber <= MAX_COINT_MORTGAGE) {
+    if (valueNumber >= minCoint && valueNumber <= maxCoint) {
 
       changeInitialInput(valueNumber, initialRangeValue, initialInput);
 
@@ -331,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function onMortgageTotalInputChange() {
     var initialRangeValue = mortgageInitialRange.value;
-    changeTotalInput(mortgageTotalInput, initialRangeValue, mortgageInitialInput);
+    changeTotalInput(mortgageTotalInput, initialRangeValue, mortgageInitialInput, MIN_COINT_MORTGAGE, MAX_COINT_MORTGAGE);
   }
 
   mortgageTotalInput.addEventListener('input', onMortgageTotalInput);
@@ -372,21 +378,21 @@ document.addEventListener('DOMContentLoaded', function () {
     initialInput.value = showCurrency(initialValueNumber);
   }
 
-  function calcInitialRange(totalInput, initialRange, initialInput) {
+  function calcInitialRange(totalInput, initialRange, initialInput, payPercent) {
     var valueNumberTotal = parseInt(totalInput.value.replace(/\D+/g, ''), 10);
     changeInitialInput(valueNumberTotal, initialRange.value, initialInput);
-    mortgagePayPercent.textContent = initialRange.value + '%';
+    payPercent.textContent = initialRange.value + '%';
   }
 
-  function calcInitialInput(initialInput, totalInput, initialRange) {
+  function calcInitialInput(initialInput, totalInput, initialRange, minPersent, payPercent) {
     var valueNumber = parseInt(initialInput.value.replace(/\D+/g, ''), 10);
     var valueNumberTotal = parseInt(totalInput.value.replace(/\D+/g, ''), 10);
 
     var percent = (valueNumber * MAX_PERSENT) / valueNumberTotal;
 
-    if (percent < MIN_PERSENT_MORTGAGE || !valueNumber) {
-      changeInitialInput(valueNumberTotal, MIN_PERSENT_MORTGAGE, initialInput);
-      initialRange.value = MIN_PERSENT_MORTGAGE;
+    if (percent < minPersent || !valueNumber) {
+      changeInitialInput(valueNumberTotal, minPersent, initialInput);
+      initialRange.value = minPersent;
     } else if (percent > MAX_PERSENT) {
       changeInitialInput(valueNumberTotal, MAX_PERSENT, initialInput);
       initialRange.value = MAX_PERSENT;
@@ -395,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function () {
       initialRange.value = percent;
     }
 
-    mortgagePayPercent.textContent = initialRange.value + '%';
+    payPercent.textContent = initialRange.value + '%';
   }
 
   function onMortgageInitialInput() {
@@ -403,35 +409,39 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function onMortgageInitialInputChange() {
-    calcInitialInput(mortgageInitialInput, mortgageTotalInput, mortgageInitialRange);
+    calcInitialInput(mortgageInitialInput, mortgageTotalInput, mortgageInitialRange, MIN_PERSENT_MORTGAGE, mortgagePayPercent);
   }
 
-  function onInitialRangeChange() {
-    calcInitialRange(mortgageTotalInput, mortgageInitialRange, mortgageInitialInput);
+  function onMortgageInitialRangeChange() {
+    calcInitialRange(mortgageTotalInput, mortgageInitialRange, mortgageInitialInput, mortgagePayPercent);
   }
 
   mortgageInitialInput.addEventListener('input', onMortgageInitialInput);
   mortgageInitialInput.addEventListener('change', onMortgageInitialInputChange);
-  mortgageInitialRange.addEventListener('change', onInitialRangeChange);
+  mortgageInitialRange.addEventListener('change', onMortgageInitialRangeChange);
 
   // Период ипотеки
+
+  function changePeriodInput(periodInput, periodRange, minPeriod, maxPeriod) {
+    var valueNumber = parseInt(periodInput.value.replace(/\D+/g, ''), 10);
+    if (valueNumber < minPeriod || !valueNumber) {
+      periodInput.value = minPeriod + ' лет';
+      periodRange.value = minPeriod;
+    } else if (valueNumber > maxPeriod) {
+      periodInput.value = maxPeriod + ' лет';
+      periodRange.value = maxPeriod;
+    } else {
+      showPeriod(periodInput, valueNumber);
+      periodRange.value = valueNumber;
+    }
+  }
 
   function onMortgagePeriodInput() {
     mortgagePeriodInput.value = mortgagePeriodInput.value.replace(/[^\d]/g, '');
   }
 
   function onMortgagePeriodInputChange() {
-    var valueNumber = parseInt(mortgagePeriodInput.value.replace(/\D+/g, ''), 10);
-    if (valueNumber < MIN_PERIOD_MORTGAGE || !valueNumber) {
-      mortgagePeriodInput.value = MIN_PERIOD_MORTGAGE + ' лет';
-      mortgagePeriodRange.value = MIN_PERIOD_MORTGAGE;
-    } else if (valueNumber > MAX_PERIOD_MORTGAGE) {
-      mortgagePeriodInput.value = MAX_PERIOD_MORTGAGE + ' лет';
-      mortgagePeriodRange.value = MAX_PERIOD_MORTGAGE;
-    } else {
-      showPeriod(mortgagePeriodInput, valueNumber);
-      mortgagePeriodRange.value = valueNumber;
-    }
+    changePeriodInput(mortgagePeriodInput, mortgagePeriodRange, MIN_PERIOD_MORTGAGE, MAX_PERIOD_MORTGAGE);
   }
 
   function onMortgagePeriodRange() {
@@ -464,6 +474,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (mortgageSum < MIN_SUM_MORTGAGE) {
       offer.style.display = 'none';
       offerWarning.style.display = 'block';
+      offerWarningTitle.textContent = 'Наш банк не выдаёт ипотечные кредиты меньше 500 000 рублей.';
     } else {
       offer.style.display = 'block';
       offerWarning.style.display = 'none';
@@ -550,13 +561,15 @@ document.addEventListener('DOMContentLoaded', function () {
   var STEP_AVTO = 50000;
   var MIN_COINT_AVTO = 500000;
   var MAX_COINT_AVTO = 5000000;
-  var MIN_COINT_BTN_AVTO = 550000;
-  var MAX_COINT_BTN_AVTO = 4950000;
+  var MIN_COINT_BTN_AVTO = MIN_COINT_AVTO + STEP_AVTO;
+  var MAX_COINT_BTN_AVTO = MAX_COINT_AVTO - STEP_AVTO;
   var MIN_SUM_AVTO = 200000;
   var MIN_PERSENT_AVTO = 20;
 
   var MIN_PERIOD_AVTO = 1;
   var MAX_PERIOD_AVTO = 5;
+
+  var COINT_POINT_AVTO = 2000000;
 
   var avtoTotalInput = avtoBlock.querySelector('.calculator__input-total');
   var avtoInitialInput = avtoBlock.querySelector('.calculator__input-initial');
@@ -568,7 +581,262 @@ document.addEventListener('DOMContentLoaded', function () {
   var avtoBtnPlus = avtoBlock.querySelector('.calculator__btn-plus');
 
   var kasko = avtoBlock.querySelector('.calculator__kasko input');
+  var insurance = avtoBlock.querySelector('.calculator__insurance input');
 
 
+  function onAvtoTotalInput() {
+    addStyleTotalInput(avtoTotalInput);
+  }
+
+  function onAvtoTotalInputChange() {
+    var initialRangeValue = avtoInitialRange.value;
+    changeTotalInput(avtoTotalInput, initialRangeValue, avtoInitialInput, MIN_COINT_AVTO, MAX_COINT_AVTO);
+  }
+
+  avtoTotalInput.addEventListener('input', onAvtoTotalInput);
+  avtoTotalInput.addEventListener('change', onAvtoTotalInputChange);
+
+
+  function onAvtoBtnMinusClick() {
+    var valueNumber = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
+
+    if (valueNumber >= MIN_COINT_BTN_AVTO) {
+      valueNumber -= STEP_AVTO;
+      avtoTotalInput.value = showCurrency(valueNumber);
+      changeInitialInput(valueNumber, avtoInitialRange.value, avtoInitialInput);
+      onAvtoCalcChange();
+    }
+  }
+
+  function onAvtoBtnPlusClick() {
+    var valueNumber = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
+
+    if (valueNumber <= MAX_COINT_BTN_AVTO) {
+      valueNumber += STEP_AVTO;
+
+      avtoTotalInput.value = showCurrency(valueNumber);
+      changeInitialInput(valueNumber, avtoInitialRange.value, avtoInitialInput);
+      onAvtoCalcChange();
+    }
+  }
+
+  avtoBtnMinus.addEventListener('click', onAvtoBtnMinusClick);
+  avtoBtnPlus.addEventListener('click', onAvtoBtnPlusClick);
+
+  // Первоначальный взнос авто
+
+  function onAvtoInitialInput() {
+    avtoInitialInput.value = avtoInitialInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
+  }
+
+  function onAvtoInitialInputChange() {
+    calcInitialInput(avtoInitialInput, avtoTotalInput, avtoInitialRange, MIN_PERSENT_AVTO, avtoPayPercent);
+  }
+
+  function onAvtoInitialRangeChange() {
+    calcInitialRange(avtoTotalInput, avtoInitialRange, avtoInitialInput, avtoPayPercent);
+  }
+
+  avtoInitialInput.addEventListener('input', onAvtoInitialInput);
+  avtoInitialInput.addEventListener('change', onAvtoInitialInputChange);
+  avtoInitialRange.addEventListener('change', onAvtoInitialRangeChange);
+
+  // Период кредитования
+
+  function onAvtoPeriodInput() {
+    avtoPeriodInput.value = avtoPeriodInput.value.replace(/[^\d]/g, '');
+  }
+
+  function onAvtoPeriodInputChange() {
+    changePeriodInput(avtoPeriodInput, avtoPeriodRange, MIN_PERIOD_AVTO, MAX_PERIOD_AVTO);
+  }
+
+  function onAvtoPeriodRange() {
+    var valueNumber = parseInt(avtoPeriodRange.value.replace(/\D+/g, ''), 10);
+    showPeriod(avtoPeriodInput, valueNumber);
+  }
+
+  avtoPeriodInput.addEventListener('input', onAvtoPeriodInput);
+  avtoPeriodInput.addEventListener('change', onAvtoPeriodInputChange);
+  avtoPeriodRange.addEventListener('change', onAvtoPeriodRange);
+
+  // Блок предложение
+
+  function onAvtoCalcChange() {
+    var valueTotal = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
+    var valueInitial = parseInt(avtoInitialInput.value.replace(/\D+/g, ''), 10);
+    var valuePeriod = parseInt(avtoPeriodInput.value.replace(/\D+/g, ''), 10);
+
+    var avtoSum = valueTotal - valueInitial;
+    var percentRate;
+
+    if (avtoSum < MIN_SUM_AVTO) {
+      offer.style.display = 'none';
+      offerWarning.style.display = 'block';
+      offerWarningTitle.textContent = 'Наш банк не выдаёт автокредиты кредиты меньше 200 000 рублей.';
+    } else {
+      offer.style.display = 'block';
+      offerWarning.style.display = 'none';
+    }
+
+    if (kasko.checked && insurance.checked) {
+      percentRate = 3.5 / 1200;
+      percentOffer.textContent = '3,5%';
+    } else if (kasko.checked || insurance.checked) {
+      percentRate = 8.5 / 1200;
+      percentOffer.textContent = '8,5%';
+    } else {
+      if (valueTotal < COINT_POINT_AVTO) {
+        percentRate = 16 / 1200;
+        percentOffer.textContent = '16%';
+      } else {
+        percentRate = 15 / 1200;
+        percentOffer.textContent = '15%';
+      }
+    }
+
+    sumOffer.textContent = showCurrency(avtoSum);
+
+    var monthlyPow = valuePeriod * 12;
+    var monthlyPay = avtoSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
+    var requiredProfit = monthlyPay * 100 / 45;
+
+    payOffer.textContent = showCurrency(monthlyPay.toFixed());
+    requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
+
+    totalSumForm.value = avtoTotalInput.value;
+    initialPayForm.value = avtoInitialInput.value;
+    periodForm.value = avtoPeriodInput.value;
+  }
+
+  avtoBlock.addEventListener('change', onAvtoCalcChange);
+
+  // Потребительский кредит <<<<<<<<<<<<
+
+  var STEP_CONSUMER = 50000;
+  var MIN_COINT_CONSUMER = 50000;
+  var MAX_COINT_CONSUMER = 3000000;
+  var MIN_COINT_BTN_CONSUMER = MIN_COINT_CONSUMER + STEP_CONSUMER;
+  var MAX_COINT_BTN_CONSUMER = MAX_COINT_CONSUMER - STEP_CONSUMER;
+  var MIN_PERIOD_CONSUMER = 1;
+  var MAX_PERIOD_CONSUMER = 7;
+
+  var FIRST_POINT_CONSUMER = 750000;
+  var SECOND_POINT_CONSUMER = 2000000;
+
+  var consumerTotalInput = consumerBlock.querySelector('.calculator__input-total');
+  var consumerPeriodInput = consumerBlock.querySelector('.calculator__input-period');
+  var consumerPeriodRange = consumerBlock.querySelector('.calculator__range-period');
+  var consumerBtnMinus = consumerBlock.querySelector('.calculator__btn-minus');
+  var consumerBtnPlus = consumerBlock.querySelector('.calculator__btn-plus');
+  var participant = consumerBlock.querySelector('.calculator__participant input');
+
+  function onConsumerTotalInput() {
+    addStyleTotalInput(consumerTotalInput);
+  }
+
+  function onConsumerTotalInputChange() {
+    var valueNumber = parseInt(consumerTotalInput.value.replace(/\D+/g, ''), 10);
+
+    if (valueNumber >= MIN_COINT_CONSUMER && valueNumber <= MAX_COINT_CONSUMER) {
+      consumerTotalInput.style.color = '#1f1e25';
+      consumerTotalInput.style.borderColor = '#1f1e25';
+      consumerTotalInput.value = showCurrency(valueNumber);
+
+    } else {
+      consumerTotalInput.value = 'Некорректное значение';
+      consumerTotalInput.style.color = 'red';
+      consumerTotalInput.style.borderColor = 'red';
+    }
+  }
+
+  consumerTotalInput.addEventListener('input', onConsumerTotalInput);
+  consumerTotalInput.addEventListener('change', onConsumerTotalInputChange);
+
+  function onConsumerBtnMinusClick() {
+    var valueNumber = parseInt(consumerTotalInput.value.replace(/\D+/g, ''), 10);
+
+    if (valueNumber >= MIN_COINT_BTN_CONSUMER) {
+      valueNumber -= STEP_CONSUMER;
+      consumerTotalInput.value = showCurrency(valueNumber);
+      onConsumerCalcChange();
+    }
+  }
+
+  function onConsumerBtnPlusClick() {
+    var valueNumber = parseInt(consumerTotalInput.value.replace(/\D+/g, ''), 10);
+
+    if (valueNumber <= MAX_COINT_BTN_CONSUMER) {
+      valueNumber += STEP_CONSUMER;
+
+      consumerTotalInput.value = showCurrency(valueNumber);
+      onConsumerCalcChange();
+    }
+  }
+
+  consumerBtnMinus.addEventListener('click', onConsumerBtnMinusClick);
+  consumerBtnPlus.addEventListener('click', onConsumerBtnPlusClick);
+
+  // Период кредитования потреб
+
+  function onConsumerPeriodInput() {
+    consumerPeriodInput.value = consumerPeriodInput.value.replace(/[^\d]/g, '');
+  }
+
+  function onConsumerPeriodInputChange() {
+    changePeriodInput(consumerPeriodInput, consumerPeriodRange, MIN_PERIOD_CONSUMER, MAX_PERIOD_CONSUMER);
+  }
+
+  function onConsumerPeriodRange() {
+    var valueNumber = parseInt(consumerPeriodRange.value.replace(/\D+/g, ''), 10);
+    showPeriod(consumerPeriodInput, valueNumber);
+  }
+
+  consumerPeriodInput.addEventListener('input', onConsumerPeriodInput);
+  consumerPeriodInput.addEventListener('change', onConsumerPeriodInputChange);
+  consumerPeriodRange.addEventListener('change', onConsumerPeriodRange);
+
+  // Блок предложение (потреб)
+
+  function onConsumerCalcChange() {
+    var avtoSum = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
+    var valuePeriod = parseInt(avtoPeriodInput.value.replace(/\D+/g, ''), 10);
+
+    var percentRate;
+
+    if (avtoSum < FIRST_POINT_CONSUMER) {
+      percentRate = 15;
+      percentOffer.textContent = '15%';
+    } else if (avtoSum >= FIRST_POINT_CONSUMER && avtoSum < SECOND_POINT_CONSUMER) {
+      percentRate = 12.5;
+      percentOffer.textContent = '12,5%';
+    } else {
+      percentRate = 9.5;
+      percentOffer.textContent = '9,5%';
+    }
+
+    if (participant.checked) {
+      percentRate -= 0.5;
+      var percentRateString = percentRate + '%';
+      percentOffer.textContent = percentRateString.replace('.', ',');
+    }
+
+    percentRate = percentRate / 1200;
+
+    sumOffer.textContent = showCurrency(avtoSum);
+
+    var monthlyPow = valuePeriod * 12;
+    var monthlyPay = avtoSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
+    var requiredProfit = monthlyPay * 100 / 45;
+
+    payOffer.textContent = showCurrency(monthlyPay.toFixed());
+    requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
+
+    totalSumForm.value = consumerTotalInput.value;
+    // initialPayForm.value = avtoInitialInput.value;
+    periodForm.value = consumerPeriodInput.value;
+  }
+
+  consumerBlock.addEventListener('change', onConsumerCalcChange);
 
 });
