@@ -830,14 +830,67 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Карта
 
+  var russiaInput = document.querySelector('#russia');
+  var sngInput = document.querySelector('#sng');
+  var europeInput = document.querySelector('#europe');
+  var mapFilter = document.querySelector('.departments__filter-form');
+
   ymaps.ready(init);
 
   function init() {
     var myMap = new ymaps.Map("map", {
       center: [55.45, 37.36],
       zoom: 3,
-      controls: []
+      controls: [],
+      behaviors: ['drag']
     });
+
+
+    var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
+      '<div id="zoom-in" class="btn"><i class="icon-plus"></i></div><br>' +
+      '<div id="zoom-out" class="btn"><i class="icon-minus"></i></div>' +
+      '</div>', {
+
+      build: function () {
+        // Вызываем родительский метод build.
+        ZoomLayout.superclass.build.call(this);
+
+        // Привязываем функции-обработчики к контексту и сохраняем ссылки
+        // на них, чтобы потом отписаться от событий.
+        this.zoomInCallback = ymaps.util.bind(this.zoomIn, this);
+        this.zoomOutCallback = ymaps.util.bind(this.zoomOut, this);
+
+        // Начинаем слушать клики на кнопках макета.
+        document.querySelector('#zoom-in').bind('click', this.zoomInCallback);
+        document.querySelector('#zoom-out').bind('click', this.zoomOutCallback);
+      },
+
+      clear: function () {
+        // Снимаем обработчики кликов.
+        document.querySelector('#zoom-in').unbind('click', this.zoomInCallback);
+        document.querySelector('#zoom-out').unbind('click', this.zoomOutCallback);
+
+        // Вызываем родительский метод clear.
+        ZoomLayout.superclass.clear.call(this);
+      },
+
+      zoomIn: function () {
+        var map = this.getData().control.getMap();
+        map.setZoom(map.getZoom() + 1, {checkZoomRange: true});
+      },
+
+      zoomOut: function () {
+        var map = this.getData().control.getMap();
+        map.setZoom(map.getZoom() - 1, {checkZoomRange: true});
+      }
+    });
+
+    var zoomControl = new ymaps.control.ZoomControl({options: {layout: ZoomLayout}});
+
+    myMap.controls.add(zoomControl);
+
+
+    // Маркеры на карте
 
     var coordsRussia = [
       [55.75, 37.61],
@@ -862,30 +915,43 @@ document.addEventListener('DOMContentLoaded', function () {
       [41.90, 12.49]
     ];
 
-    var russiaCollection = new ymaps.GeoObjectCollection({}, {
-      iconLayout: 'default#image',
-      iconImageHref: 'img/marker.png',
-    });
+    function madeCollection(coords) {
+      var collection = new ymaps.GeoObjectCollection({}, {
+        iconLayout: 'default#image',
+        iconImageHref: 'img/marker.png',
+      });
 
-    for (var i = 0; i < coordsRussia.length; i++) {
-      russiaCollection.add(new ymaps.Placemark(coordsRussia[i]));
+      for (var i = 0; i < coords.length; i++) {
+        collection.add(new ymaps.Placemark(coords[i]));
+      }
+
+      return collection;
     }
 
-    myMap.geoObjects.add(russiaCollection);
+    var russiaCollection = madeCollection(coordsRussia);
+    var sngCollection = madeCollection(coordsSNG);
+    var europeCollection = madeCollection(coordsEurope);
 
-    // myMap.controls.add('zoomControl', {
-    //   size: 'small',
-    //   float: 'none',
-    //   position: {
-    //     bottom: '50px',
-    //     right: '30px'
-    //   }
-    // });
+    function onFilterChange() {
+      if (russiaInput.checked) {
+        myMap.geoObjects.add(russiaCollection);
+      } else {
+        myMap.geoObjects.remove(russiaCollection);
+      }
+      if (sngInput.checked) {
+        myMap.geoObjects.add(sngCollection);
+      } else {
+        myMap.geoObjects.remove(sngCollection);
+      }
+      if (europeInput.checked) {
+        myMap.geoObjects.add(europeCollection);
+      } else {
+        myMap.geoObjects.remove(europeCollection);
+      }
+    }
 
-    // myMap.controls.add('geolocationControl', {
-    //   geolocationControlFloat: 'right'
-    // });
-
+    onFilterChange();
+    mapFilter.addEventListener('change', onFilterChange);
   }
 
 });

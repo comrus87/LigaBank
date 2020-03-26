@@ -830,34 +830,128 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Карта
 
+  var russiaInput = document.querySelector('#russia');
+  var sngInput = document.querySelector('#sng');
+  var europeInput = document.querySelector('#europe');
+  var mapFilter = document.querySelector('.departments__filter-form');
+
   ymaps.ready(init);
 
   function init() {
     var myMap = new ymaps.Map("map", {
       center: [55.45, 37.36],
-      zoom: 3
+      zoom: 3,
+      controls: [],
+      behaviors: ['drag']
     });
 
+
+    var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
+      '<div id="zoom-in" class="btn"><i class="icon-plus"></i></div><br>' +
+      '<div id="zoom-out" class="btn"><i class="icon-minus"></i></div>' +
+      '</div>', {
+
+      build: function () {
+        // Вызываем родительский метод build.
+        ZoomLayout.superclass.build.call(this);
+
+        // Привязываем функции-обработчики к контексту и сохраняем ссылки
+        // на них, чтобы потом отписаться от событий.
+        this.zoomInCallback = ymaps.util.bind(this.zoomIn, this);
+        this.zoomOutCallback = ymaps.util.bind(this.zoomOut, this);
+
+        // Начинаем слушать клики на кнопках макета.
+        document.querySelector('#zoom-in').bind('click', this.zoomInCallback);
+        document.querySelector('#zoom-out').bind('click', this.zoomOutCallback);
+      },
+
+      clear: function () {
+        // Снимаем обработчики кликов.
+        document.querySelector('#zoom-in').unbind('click', this.zoomInCallback);
+        document.querySelector('#zoom-out').unbind('click', this.zoomOutCallback);
+
+        // Вызываем родительский метод clear.
+        ZoomLayout.superclass.clear.call(this);
+      },
+
+      zoomIn: function () {
+        var map = this.getData().control.getMap();
+        map.setZoom(map.getZoom() + 1, {checkZoomRange: true});
+      },
+
+      zoomOut: function () {
+        var map = this.getData().control.getMap();
+        map.setZoom(map.getZoom() - 1, {checkZoomRange: true});
+      }
+    });
+
+    var zoomControl = new ymaps.control.ZoomControl({options: {layout: ZoomLayout}});
+
+    myMap.controls.add(zoomControl);
+
+
+    // Маркеры на карте
+
     var coordsRussia = [
-      [55.4507, 37.3656],
-      [59.57, 30.19],
+      [55.75, 37.61],
+      [59.93, 30.31],
       [51.54, 46.00],
-      [67.36, 33.40],
-      [57.09, 65.31],
+      [67.61, 33.66],
+      [57.15, 65.53],
       [54.99, 73.36]
     ];
 
-    var myCollection = new ymaps.GeoObjectCollection({}, {
-      iconLayout: 'default#image',
-      iconImageHref: 'img/marker.png',
-    });
+    var coordsSNG = [
+      [40.36, 49.83],
+      [41.31, 69.27],
+      [53.90, 27.56],
+      [43.23, 76.94]
+    ];
 
-    for (var i = 0; i < coordsRussia.length; i++) {
-      myCollection.add(new ymaps.Placemark(coordsRussia[i]));
+    var coordsEurope = [
+      [48.85, 2.35],
+      [50.08, 14.42],
+      [51.50, -0.12],
+      [41.90, 12.49]
+    ];
+
+    function madeCollection(coords) {
+      var collection = new ymaps.GeoObjectCollection({}, {
+        iconLayout: 'default#image',
+        iconImageHref: 'img/marker.png',
+      });
+
+      for (var i = 0; i < coords.length; i++) {
+        collection.add(new ymaps.Placemark(coords[i]));
+      }
+
+      return collection;
     }
 
-    myMap.geoObjects.add(myCollection);
+    var russiaCollection = madeCollection(coordsRussia);
+    var sngCollection = madeCollection(coordsSNG);
+    var europeCollection = madeCollection(coordsEurope);
 
+    function onFilterChange() {
+      if (russiaInput.checked) {
+        myMap.geoObjects.add(russiaCollection);
+      } else {
+        myMap.geoObjects.remove(russiaCollection);
+      }
+      if (sngInput.checked) {
+        myMap.geoObjects.add(sngCollection);
+      } else {
+        myMap.geoObjects.remove(sngCollection);
+      }
+      if (europeInput.checked) {
+        myMap.geoObjects.add(europeCollection);
+      } else {
+        myMap.geoObjects.remove(europeCollection);
+      }
+    }
+
+    onFilterChange();
+    mapFilter.addEventListener('change', onFilterChange);
   }
 
 });

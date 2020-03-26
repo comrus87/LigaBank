@@ -1,0 +1,290 @@
+.page-footer {
+  background-color: $bg-color;
+  margin-top: 110px;
+  padding-top: 48px;
+  padding-bottom: 60px;
+
+  &__wrap {
+    @include wrap-desktop;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  &__logo {
+    display: block;
+    width: 150px;
+    height: 27px;
+  }
+
+  &__logo-tablet,
+  &__logo-mobile {
+    display: none;
+  }
+
+  &__first-column {
+    display: flex;
+    justify-content: space-between;
+    width: 40.8%;
+    min-width: 360px;
+  }
+
+  &__logo-block {
+    width: 53%;
+  }
+
+  &__nav-list {
+    @include list-default;
+    width: 145px;
+    margin-top: 6px;
+  }
+
+  &__nav-item {
+    margin-bottom: 7px;
+  }
+
+  &__nav-item:last-child {
+    margin-bottom: 0;
+  }
+
+  &__nav-link {
+    font-family: $roboto;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    color: $black-color;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+      opacity: 0.7;
+    }
+  }
+
+  &__adress {
+    font-family: $roboto;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 17px;
+    color: #707c87;
+    margin: 16px 0 0;
+  }
+
+  &__second-column {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 9px;
+    width: 52.4%;
+  }
+
+  &__sms,
+  &__phone {
+    position: relative;
+
+    a {
+      font-family: $roboto;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 16px;
+      color: $black-color;
+
+      &:hover,
+      &:focus {
+        opacity: 0.7;
+      }
+    }
+
+    p {
+      font-family: $roboto;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      color: #707c87;
+      margin: 0;
+    }
+  }
+
+  &__sms {
+    padding-left: 29px;
+    width: 32%;
+    margin-right: 20px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 10px;
+      height: 16px;
+      background: url("../img/smartphone.svg") no-repeat center;
+      background-size: cover;
+      top: 4px;
+      left: 0;
+    }
+  }
+
+  &__phone {
+    padding-left: 33px;
+    margin-right: 20px;
+
+    p {
+      max-width: 122px;
+    }
+
+    a {
+      width: 122px;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 16px;
+      height: 16px;
+      background: url("../img/phone.svg") no-repeat center;
+      top: 4px;
+      left: 0;
+    }
+  }
+
+  &__social-list {
+    @include list-default;
+    display: flex;
+    margin: 2px 0 0;
+    width: 102px;
+    flex-wrap: wrap;
+
+    li {
+      margin-right: 15px;
+
+      &:hover,
+      &:focus {
+        opacity: 0.7;
+      }
+    }
+
+    li:nth-child(4n) {
+      margin-right: 0;
+    }
+  }
+}
+
+@media (max-width: $tablet-width) {
+  .page-footer {
+    margin-top: 80px;
+    padding-top: 51px;
+    padding-bottom: 110px;
+
+    &__wrap {
+      @include wrap-tablet;
+      justify-content: flex-start;
+    }
+
+    &__logo-tablet {
+      display: block;
+    }
+
+    &__logo-desktop {
+      display: none;
+    }
+
+    &__logo {
+      width: 134px;
+      height: 24px;
+    }
+
+    &__first-column {
+      width: 52.2%;
+      flex-direction: column;
+      position: relative;
+      min-width: 0;
+    }
+
+    &__adress {
+      position: absolute;
+      margin: 0;
+      width: 73%;
+      bottom: -76px;
+    }
+
+    &__nav-list {
+     margin: 27px 0 0;
+    }
+
+    &__second-column {
+      flex-direction: column;
+      padding-top: 0;
+      width: auto;
+    }
+
+    &__sms {
+      padding-left: 29px;
+      width: 196px;
+      margin: 6px 0 21px;
+    }
+
+    &__social-list {
+      margin: 24px 0 0;
+      width: 117px;
+
+      li {
+        margin-right: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: $mobile-width) {
+  .page-footer {
+    margin-top: 60px;
+    padding-top: 32px;
+    padding-bottom: 51px;
+
+    &__wrap {
+      @include wrap-mobile;
+      flex-direction: column;
+    }
+
+    &__logo-mobile {
+      display: block;
+    }
+
+    &__logo-tablet {
+      display: none;
+    }
+
+    &__logo {
+      width: 114px;
+      height: 19px;
+    }
+
+    &__adress {
+      display: none;
+    }
+
+    &__first-column {
+      width: 100%;
+    }
+
+    &__nav-list {
+     width: 100%;
+     margin-top: 22px;
+    }
+
+    &__nav-item {
+      margin-bottom: 6px;
+    }
+
+    &__nav-link {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    &__sms {
+      margin: 20px 0 16px;
+    }
+
+    &__social-list {
+      margin-top: 19px;
+    }
+  }
+}
