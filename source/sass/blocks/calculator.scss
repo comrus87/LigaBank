@@ -408,10 +408,6 @@
     &__warning {
       width: calc(500 / #{$vw-desktop} * 100vw);
     }
-
-    &__fill-form {
-      width: 100%;
-    }
   }
 }
 
@@ -471,7 +467,7 @@
     &__offer-column,
     &__warning {
       width: 100%;
-      margin-top: 40px;
+      margin-top: 38px;
       padding-left: 59px;
     }
 
@@ -559,7 +555,7 @@
 
     &__period {
       margin-top: 9px;
-      margin-bottom: 17px;
+      margin-bottom: 13px;
     }
 
     &__offer-column,
@@ -595,6 +591,7 @@
     }
 
     &__fill-form {
+      width: 100%;
       font-size: 14px;
       line-height: 20px;
       padding: 17px 0 14px;

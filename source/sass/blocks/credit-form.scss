@@ -1,6 +1,6 @@
 .credit-form {
   width: 770px;
-  margin: 0 auto;
+  margin: 65px auto 32px;
   background-color: $bg-color;
   padding: 68px 70px 70px;
 
@@ -118,7 +118,9 @@
   .credit-form {
     background-color: transparent;
     width: 100%;
-    padding: 0 0 60px;
+    padding: 0;
+    margin: 58px auto 35px;
+
 
     &__title {
       font-size: 18px;
@@ -135,6 +137,7 @@
 
 @media (max-width: $mobile-width) {
   .credit-form {
+    margin: 46px auto 24px;
 
     &__title {
       font-size: 16px;

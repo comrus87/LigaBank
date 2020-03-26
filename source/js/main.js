@@ -495,6 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
     totalSumForm.value = mortgageTotalInput.value;
     initialPayForm.value = mortgageInitialInput.value;
     periodForm.value = mortgagePeriodInput.value;
+    initialPayBlockForm.style.display = 'flex';
   }
 
   mortgageBlock.addEventListener('change', onMortgageCalcChange);
@@ -698,6 +699,7 @@ document.addEventListener('DOMContentLoaded', function () {
     totalSumForm.value = avtoTotalInput.value;
     initialPayForm.value = avtoInitialInput.value;
     periodForm.value = avtoPeriodInput.value;
+    initialPayBlockForm.style.display = 'flex';
   }
 
   avtoBlock.addEventListener('change', onAvtoCalcChange);
@@ -719,6 +721,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var consumerBtnMinus = consumerBlock.querySelector('.calculator__btn-minus');
   var consumerBtnPlus = consumerBlock.querySelector('.calculator__btn-plus');
   var participant = consumerBlock.querySelector('.calculator__participant input');
+  var initialPayBlockForm = document.querySelector('.credit-form__initial-item');
 
   function onConsumerTotalInput() {
     addStyleTotalInput(consumerTotalInput);
@@ -822,8 +825,8 @@ document.addEventListener('DOMContentLoaded', function () {
     requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
 
     totalSumForm.value = consumerTotalInput.value;
-    initialPayForm.value = '0';
     periodForm.value = consumerPeriodInput.value;
+    initialPayBlockForm.style.display = 'none';
   }
 
   consumerBlock.addEventListener('change', onConsumerCalcChange);
@@ -846,48 +849,48 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
-      '<div id="zoom-in" class="btn"><i class="icon-plus"></i></div><br>' +
-      '<div id="zoom-out" class="btn"><i class="icon-minus"></i></div>' +
-      '</div>', {
+    // var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
+    //   '<div id="zoom-in" class="btn"><i class="icon-plus"></i></div><br>' +
+    //   '<div id="zoom-out" class="btn"><i class="icon-minus"></i></div>' +
+    //   '</div>', {
 
-      build: function () {
-        // Вызываем родительский метод build.
-        ZoomLayout.superclass.build.call(this);
+    //   build: function () {
+    //     // Вызываем родительский метод build.
+    //     ZoomLayout.superclass.build.call(this);
 
-        // Привязываем функции-обработчики к контексту и сохраняем ссылки
-        // на них, чтобы потом отписаться от событий.
-        this.zoomInCallback = ymaps.util.bind(this.zoomIn, this);
-        this.zoomOutCallback = ymaps.util.bind(this.zoomOut, this);
+    //     // Привязываем функции-обработчики к контексту и сохраняем ссылки
+    //     // на них, чтобы потом отписаться от событий.
+    //     this.zoomInCallback = ymaps.util.bind(this.zoomIn, this);
+    //     this.zoomOutCallback = ymaps.util.bind(this.zoomOut, this);
 
-        // Начинаем слушать клики на кнопках макета.
-        document.querySelector('#zoom-in').bind('click', this.zoomInCallback);
-        document.querySelector('#zoom-out').bind('click', this.zoomOutCallback);
-      },
+    //     // Начинаем слушать клики на кнопках макета.
+    //     document.querySelector('#zoom-in').bind('click', this.zoomInCallback);
+    //     document.querySelector('#zoom-out').bind('click', this.zoomOutCallback);
+    //   },
 
-      clear: function () {
-        // Снимаем обработчики кликов.
-        document.querySelector('#zoom-in').unbind('click', this.zoomInCallback);
-        document.querySelector('#zoom-out').unbind('click', this.zoomOutCallback);
+    //   clear: function () {
+    //     // Снимаем обработчики кликов.
+    //     document.querySelector('#zoom-in').unbind('click', this.zoomInCallback);
+    //     document.querySelector('#zoom-out').unbind('click', this.zoomOutCallback);
 
-        // Вызываем родительский метод clear.
-        ZoomLayout.superclass.clear.call(this);
-      },
+    //     // Вызываем родительский метод clear.
+    //     ZoomLayout.superclass.clear.call(this);
+    //   },
 
-      zoomIn: function () {
-        var map = this.getData().control.getMap();
-        map.setZoom(map.getZoom() + 1, {checkZoomRange: true});
-      },
+    //   zoomIn: function () {
+    //     var map = this.getData().control.getMap();
+    //     map.setZoom(map.getZoom() + 1, {checkZoomRange: true});
+    //   },
 
-      zoomOut: function () {
-        var map = this.getData().control.getMap();
-        map.setZoom(map.getZoom() - 1, {checkZoomRange: true});
-      }
-    });
+    //   zoomOut: function () {
+    //     var map = this.getData().control.getMap();
+    //     map.setZoom(map.getZoom() - 1, {checkZoomRange: true});
+    //   }
+    // });
 
-    var zoomControl = new ymaps.control.ZoomControl({options: {layout: ZoomLayout}});
+    // var zoomControl = new ymaps.control.ZoomControl({options: {layout: ZoomLayout}});
 
-    myMap.controls.add(zoomControl);
+    // myMap.controls.add(zoomControl);
 
 
     // Маркеры на карте
