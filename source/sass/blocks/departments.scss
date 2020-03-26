@@ -64,7 +64,75 @@
     background:  url("../img/map-desktop.jpg") no-repeat center;
     background-size: cover;
   }
+
+  &__btn-zoom {
+    display: block;
+    outline: none;
+    border: none;
+    width: 30px;
+    height: 32px;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 24px;
+    color: #676767;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+
+    &:hover,
+    &:focus {
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 0.7;
+    }
+  }
+
+  &__btn-zoom-in {
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 20px;
+      height: 1px;
+      background-color: #d3d3d3;
+      bottom: 0;
+    }
+  }
+
+  &__btn-zoom-out {
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+  }
+
+  &__geo-location {
+    display: block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: none;
+    background: url("../img/geo-location.svg") no-repeat 45% 55%;
+    background-color: #ffffff;
+
+    &:hover,
+    &:focus {
+      opacity: 0.9;
+    }
+
+    &:active {
+      opacity: 0.7;
+    }
+  }
 }
+
 
 @media (max-width: $tablet-width) {
   .departments {
@@ -83,7 +151,7 @@
     }
 
     &__map {
-      background:  url("../img/map-tablet.jpg") no-repeat center;
+      background: url("../img/map-tablet.jpg") no-repeat center;
       background-size: cover;
     }
   }

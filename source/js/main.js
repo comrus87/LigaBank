@@ -2,6 +2,12 @@
 
 document.addEventListener('DOMContentLoaded', function () {
 
+  // Подключаем плавную прокрутку
+
+  var scroll = new SmoothScroll('a[href*="#"]', {
+    speed: 500
+  });
+
   // Попап авторизации
 
   var ESC_KEYCODE = 27;
@@ -28,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function () {
     loginInput.value = '';
     passwordInput.value = '';
   }
-
 
   function changeShowPassword() {
     if (passwordInput.getAttribute('type') === 'password') {
@@ -85,7 +90,8 @@ document.addEventListener('DOMContentLoaded', function () {
       autoplay: {
         delay: 4000,
       },
-      speed: 700
+      speed: 700,
+      loop: true
     });
 
     sliderIntro.init();
@@ -184,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var state = {
     modeCredit: null
   };
-
 
   var arrBlocks = [];
   arrBlocks.push(mortgageBlock, avtoBlock, consumerBlock);
@@ -300,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Общиая стоимость
+  // Общиая сумма ипотеки
 
   function addStyleTotalInput(totalInput) {
     totalInput.value = totalInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
@@ -367,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function () {
   mortgageBtnPlus.addEventListener('click', onMortgageBtnPlusClick);
 
 
-  // Первоначальный взнос
+  // Первоначальный взнос ипотеки
 
   function changeInitialInput(totalValue, persent, initialInput) {
     var initialValueNumber = Math.round((totalValue * persent) / MAX_PERSENT);
@@ -450,7 +455,7 @@ document.addEventListener('DOMContentLoaded', function () {
   mortgagePeriodRange.addEventListener('change', onMortgagePeriodRange);
 
 
-  // Блок предложение
+  // Блок предложение ипотеки
 
   function onMortgageCalcChange() {
     var valueTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
@@ -633,7 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
   avtoInitialInput.addEventListener('change', onAvtoInitialInputChange);
   avtoInitialRange.addEventListener('change', onAvtoInitialRangeChange);
 
-  // Период кредитования
+  // Период кредитования авто
 
   function onAvtoPeriodInput() {
     avtoPeriodInput.value = avtoPeriodInput.value.replace(/[^\d]/g, '');
@@ -652,7 +657,7 @@ document.addEventListener('DOMContentLoaded', function () {
   avtoPeriodInput.addEventListener('change', onAvtoPeriodInputChange);
   avtoPeriodRange.addEventListener('change', onAvtoPeriodRange);
 
-  // Блок предложение
+  // Блок предложение авто
 
   function onAvtoCalcChange() {
     var valueTotal = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
@@ -769,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function () {
   consumerBtnMinus.addEventListener('click', onConsumerBtnMinusClick);
   consumerBtnPlus.addEventListener('click', onConsumerBtnPlusClick);
 
-  // Период кредитования потреб
+  // Период кредитования потребителя
 
   function onConsumerPeriodInput() {
     consumerPeriodInput.value = consumerPeriodInput.value.replace(/[^\d]/g, '');
@@ -788,7 +793,7 @@ document.addEventListener('DOMContentLoaded', function () {
   consumerPeriodInput.addEventListener('change', onConsumerPeriodInputChange);
   consumerPeriodRange.addEventListener('change', onConsumerPeriodRange);
 
-  // Блок предложение (потреб)
+  // Блок предложение потребитель
 
   function onConsumerCalcChange() {
     var consumerSum = parseInt(consumerTotalInput.value.replace(/\D+/g, ''), 10);
@@ -841,6 +846,7 @@ document.addEventListener('DOMContentLoaded', function () {
   ymaps.ready(init);
 
   function init() {
+
     var myMap = new ymaps.Map("map", {
       center: [55.45, 37.36],
       zoom: 3,
@@ -849,49 +855,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    // var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
-    //   '<div id="zoom-in" class="btn"><i class="icon-plus"></i></div><br>' +
-    //   '<div id="zoom-out" class="btn"><i class="icon-minus"></i></div>' +
-    //   '</div>', {
+    var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
+      '<button type="button" id="zoom-in" class="departments__btn-zoom departments__btn-zoom-in">+</button>' +
+      '<button type="button" id="zoom-out" class="departments__btn-zoom departments__btn-zoom-out">-</buton>' +
+      '</div>', {
 
-    //   build: function () {
-    //     // Вызываем родительский метод build.
-    //     ZoomLayout.superclass.build.call(this);
+      build: function () {
+        ZoomLayout.superclass.build.call(this);
+        this.zoomInCallback = ymaps.util.bind(this.zoomIn, this);
+        this.zoomOutCallback = ymaps.util.bind(this.zoomOut, this);
 
-    //     // Привязываем функции-обработчики к контексту и сохраняем ссылки
-    //     // на них, чтобы потом отписаться от событий.
-    //     this.zoomInCallback = ymaps.util.bind(this.zoomIn, this);
-    //     this.zoomOutCallback = ymaps.util.bind(this.zoomOut, this);
+        document.querySelector('#zoom-in').addEventListener('click', this.zoomInCallback);
+        document.querySelector('#zoom-out').addEventListener('click', this.zoomOutCallback);
+      },
 
-    //     // Начинаем слушать клики на кнопках макета.
-    //     document.querySelector('#zoom-in').bind('click', this.zoomInCallback);
-    //     document.querySelector('#zoom-out').bind('click', this.zoomOutCallback);
-    //   },
+      clear: function () {
+        document.querySelector('#zoom-in').removeEventListener('click', this.zoomInCallback);
+        document.querySelector('#zoom-out').removeEventListener('click', this.zoomOutCallback);
 
-    //   clear: function () {
-    //     // Снимаем обработчики кликов.
-    //     document.querySelector('#zoom-in').unbind('click', this.zoomInCallback);
-    //     document.querySelector('#zoom-out').unbind('click', this.zoomOutCallback);
+        ZoomLayout.superclass.clear.call(this);
+      },
 
-    //     // Вызываем родительский метод clear.
-    //     ZoomLayout.superclass.clear.call(this);
-    //   },
+      zoomIn: function () {
+        var map = this.getData().control.getMap();
+        map.setZoom(map.getZoom() + 1, {checkZoomRange: true});
+      },
 
-    //   zoomIn: function () {
-    //     var map = this.getData().control.getMap();
-    //     map.setZoom(map.getZoom() + 1, {checkZoomRange: true});
-    //   },
+      zoomOut: function () {
+        var map = this.getData().control.getMap();
+        map.setZoom(map.getZoom() - 1, {checkZoomRange: true});
+      }
+    });
 
-    //   zoomOut: function () {
-    //     var map = this.getData().control.getMap();
-    //     map.setZoom(map.getZoom() - 1, {checkZoomRange: true});
-    //   }
-    // });
+    var zoomControl = new ymaps.control.ZoomControl({options: {layout: ZoomLayout}});
 
-    // var zoomControl = new ymaps.control.ZoomControl({options: {layout: ZoomLayout}});
+    myMap.controls.add(zoomControl, {
+      position: {
+        top: 170,
+        right: 10
+      }
+    });
 
-    // myMap.controls.add(zoomControl);
+    var GeoLayout = ymaps.templateLayoutFactory.createClass('<button type="button" id="geo-location" class="departments__geo-location"></button>', {
+    });
 
+    var geoLocationControl = new ymaps.control.GeolocationControl({options: {layout: GeoLayout}});
+
+    myMap.controls.add(geoLocationControl, {
+      position: {
+        top: 250,
+        right: 10
+      }
+    });
 
     // Маркеры на карте
 
