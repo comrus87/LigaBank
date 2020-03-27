@@ -18,7 +18,7 @@
     padding: 38px 0 29px 27px;
     border-bottom: 1px solid #c1c2ca;
 
-    input+label {
+    input + label {
       font-family: $roboto;
       font-weight: 400;
       font-size: 14px;
@@ -40,10 +40,18 @@
         left: 0;
         top: -2px;
       }
+
+      &:hover,
+      &:focus {
+        opacity: 0.85;
+      }
+
+      &:active {
+        opacity: 0.65;
+      }
     }
 
-    input:checked+label {
-
+    input:checked + label {
       &::after {
         content: "";
         position: absolute;
@@ -61,12 +69,11 @@
   &__map {
     width: 100%;
     height: 462px;
-    background:  url("../img/map-desktop.jpg") no-repeat center;
+    background: url("../img/map-desktop.jpg") no-repeat center;
     background-size: cover;
   }
 
   &__btn-zoom {
-    display: block;
     outline: none;
     border: none;
     width: 30px;
@@ -170,14 +177,14 @@
     &__filter-form {
       padding: 21px 0 20px 20px;
 
-      input+label {
+      input + label {
         margin-right: 20px;
       }
     }
 
     &__map {
       height: 381px;
-      background:  url("../img/map-mobile.jpg") no-repeat center;
+      background: url("../img/map-mobile.jpg") no-repeat center;
       background-size: cover;
     }
   }

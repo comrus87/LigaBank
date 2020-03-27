@@ -191,10 +191,11 @@
 
 @keyframes fade {
   from {
-    opacity: 0.2
+    opacity: 0.2;
   }
+
   to {
-    opacity: 1
+    opacity: 1;
   }
 }
 
@@ -378,14 +379,12 @@
     }
 
     &__block--credits {
-
       .services__title {
         max-width: 80%;
       }
     }
 
     &__block--insurance {
-
       .services__title {
         max-width: 90%;
         min-height: 33px;

@@ -854,21 +854,6 @@ document.addEventListener('DOMContentLoaded', function () {
       behaviors: ['drag']
     });
 
-    // myMap.controls.add('geolocationControl', {
-    //   position: {
-    //     top: 260,
-    //     right: 10
-    //   }
-    // });
-
-    // myMap.controls.add('zoomControl', {
-    //   size: 'small',
-    //   position: {
-    //     top: 180,
-    //     right: 10
-    //   }
-    // });
-
 
     var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
       '<button type="button" id="zoom-in" class="departments__btn-zoom departments__btn-zoom-in">+</button>' +
@@ -906,7 +891,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     myMap.controls.add(zoomControl, {
       position: {
-        top: 180,
+        top: 170,
         right: 10
       }
     });
@@ -918,7 +903,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     myMap.controls.add(geoLocationControl, {
       position: {
-        top: 260,
+        top: 250,
         right: 10
       }
     });

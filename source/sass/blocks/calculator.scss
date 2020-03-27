@@ -74,7 +74,6 @@
   &__select-list {
     @include list-default;
     position: absolute;
-    left: 400px;
     width: 100%;
     top: 59px;
     left: 0;
@@ -87,7 +86,6 @@
     border: 1px solid $black-color;
     border-top: none;
     width: 100%;
-    cursor: pointer;
     background-color: #ffffff;
     font-family: $roboto;
     font-weight: 500;
@@ -98,7 +96,7 @@
 
     &:hover,
     &:focus {
-     color: rgba(31, 30, 37, 0.7);
+      color: rgba(31, 30, 37, 0.7);
     }
   }
 
@@ -108,7 +106,6 @@
   }
 
   &__select--active {
-
     .calculator__select-title {
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
@@ -131,7 +128,6 @@
   &__mortgage-container,
   &__avto-container,
   &__consumer-container {
-
     .calculator__target-title {
       margin-bottom: 17px;
     }
@@ -174,6 +170,15 @@
         cursor: pointer;
         background-color: $blue-color;
       }
+
+      &:hover,
+      &:focus {
+        opacity: 0.85;
+      }
+
+      &:active {
+        opacity: 0.7;
+      }
     }
   }
 
@@ -210,7 +215,7 @@
     }
   }
 
-   &__btn-minus {
+  &__btn-minus {
     left: 24px;
   }
 
@@ -246,9 +251,9 @@
     margin-top: 19px;
     margin-bottom: 24px;
 
-     input[type="range"] {
+    input[type="range"] {
       margin-top: 17px;
-     }
+    }
   }
 
   &__period-container {
@@ -257,10 +262,10 @@
     margin-top: 7px;
   }
 
-  &__capital input+label,
-  &__kasko input+label,
-  &__insurance input+label,
-  &__participant input+label {
+  &__capital input + label,
+  &__kasko input + label,
+  &__insurance input + label,
+  &__participant input + label {
     position: relative;
     font-family: $roboto;
     font-weight: 400;
@@ -282,13 +287,21 @@
       left: 0;
       top: 2px;
     }
+
+    &:hover,
+    &:focus {
+      opacity: 0.85;
+    }
+
+    &:active {
+      opacity: 0.65;
+    }
   }
 
-  &__capital input:checked+label,
-  &__kasko input:checked+label,
-  &__insurance input:checked+label,
-  &__participant input:checked+label {
-
+  &__capital input:checked + label,
+  &__kasko input:checked + label,
+  &__insurance input:checked + label,
+  &__participant input:checked + label {
     &::after {
       content: "";
       position: absolute;
@@ -342,7 +355,6 @@
     @include list-default;
     display: flex;
     flex-wrap: wrap;
-
   }
 
   &__offer-item {
@@ -443,7 +455,6 @@
     &__mortgage-container,
     &__avto-container,
     &__consumer-container {
-
       .calculator__target-title {
         margin-bottom: 13px;
       }
@@ -517,7 +528,6 @@
     &__mortgage-container,
     &__avto-container,
     &__consumer-container {
-
       .calculator__target-title {
         margin-bottom: 9px;
       }
@@ -527,10 +537,10 @@
       right: 15px;
     }
 
-    &__capital input+label,
-    &__kasko input+label,
-    &__insurance input+label,
-    &__participant input+label {
+    &__capital input + label,
+    &__kasko input + label,
+    &__insurance input + label,
+    &__participant input + label {
       font-size: 14px;
       line-height: 20px;
 
@@ -539,11 +549,10 @@
       }
     }
 
-    &__capital input:checked+label,
-    &__kasko input:checked+label,
-    &__insurance input:checked+label,
-    &__participant input:checked+label {
-
+    &__capital input:checked + label,
+    &__kasko input:checked + label,
+    &__insurance input:checked + label,
+    &__participant input:checked + label {
       &::after {
         top: 0;
       }
