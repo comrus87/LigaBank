@@ -896,7 +896,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    var GeoLayout = ymaps.templateLayoutFactory.createClass('<button type="button" id="geo-location" class="departments__geo-location"></button>', {
+    var GeoLayout = ymaps.templateLayoutFactory.createClass('<button type="button" id="geo-location" class="departments__geo-location" aria-label="Показать мое местоположение"></button>', {
     });
 
     var geoLocationControl = new ymaps.control.GeolocationControl({options: {layout: GeoLayout}});
