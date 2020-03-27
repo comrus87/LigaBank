@@ -850,8 +850,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var myMap = new ymaps.Map("map", {
       center: [55.45, 37.36],
       zoom: 3,
-      controls: [],
-      behaviors: ['drag']
+      controls: []
     });
 
 
