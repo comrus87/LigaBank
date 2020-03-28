@@ -43,21 +43,33 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  if (modalLogin) {
-    btnShowPassword.addEventListener('mousedown', function () {
-      var count = 0;
-      var timerId = setInterval(function () {
-        count++;
-      }, 200);
+  function showPasswordUnPress(event) {
+    var count = 0;
+    var timerId = setInterval(function () {
+      count++;
+    }, 200);
 
-      btnShowPassword.addEventListener('mouseup', function () {
-        clearInterval(timerId);
-        if (count > 2) {
-          changeShowPassword();
-          count = 0;
-        }
-      });
+    btnShowPassword.addEventListener(event, function () {
+      clearInterval(timerId);
+      if (count > 2) {
+        changeShowPassword();
+        count = 0;
+      }
     });
+  }
+
+  function onBtnShowPasswordClick() {
+    showPasswordUnPress('mouseup');
+  }
+
+  function onBtnShowPasswordTouch() {
+    showPasswordUnPress('touchend');
+  }
+
+  if (modalLogin) {
+
+    btnShowPassword.addEventListener('mousedown', onBtnShowPasswordClick);
+    btnShowPassword.addEventListener('touchstart', onBtnShowPasswordTouch);
 
     btnOpenModalLogin.addEventListener('click', openLoginModal);
     btnCloseModalLogin.addEventListener('click', closeLoginModal);
