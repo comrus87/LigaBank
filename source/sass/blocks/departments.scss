@@ -1,6 +1,7 @@
 .departments {
   @include wrap-desktop;
   padding-top: 63px;
+  padding-bottom: 110px;
 
   &__title {
     font-family: $roboto;
@@ -145,6 +146,7 @@
   .departments {
     @include wrap-tablet;
     padding-top: 34px;
+    padding-bottom: 80px;
 
 
     &__title {
@@ -166,7 +168,7 @@
 
 @media (max-width: $mobile-width) {
   .departments {
-    padding: 28px 0 0;
+    padding: 28px 0 60px;
 
     &__title {
       font-size: 22px;

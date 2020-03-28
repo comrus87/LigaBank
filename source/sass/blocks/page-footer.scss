@@ -1,8 +1,8 @@
 .page-footer {
   background-color: $bg-color;
-  margin-top: 110px;
   padding-top: 48px;
   padding-bottom: 60px;
+  margin-top: auto;
 
   &__wrap {
     @include wrap-desktop;
@@ -170,7 +170,6 @@
 
 @media (max-width: $tablet-width) {
   .page-footer {
-    margin-top: 80px;
     padding-top: 51px;
     padding-bottom: 110px;
 
@@ -235,7 +234,6 @@
 
 @media (max-width: $mobile-width) {
   .page-footer {
-    margin-top: 60px;
     padding-top: 32px;
     padding-bottom: 51px;
 
