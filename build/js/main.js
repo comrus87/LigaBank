@@ -148,10 +148,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function changeServicePage() {
     if (window.matchMedia('(min-width: 1024px)').matches) {
-      sliderServices.destroy(false);
+      sliderServices.destroy();
       switchTabs();
     } else if (window.matchMedia('(max-width: 1024px)').matches) {
       unSwitchTabs();
+      sliderServices.destroy();
       sliderServices = new Swiper('.services', {
         pagination: {
           el: '.swiper-pagination',
