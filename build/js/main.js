@@ -105,15 +105,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var servicesPage = document.querySelector('.services');
 
   function switchTabs() {
-    function hideTabContent(a) {
-      for (var i = a; i < tabContents.length; i++) {
+    function hideTabContent() {
+      for (var i = 0; i < tabContents.length; i++) {
         tabContents[i].classList.add('services__hide');
         tabContents[i].classList.remove('services__show');
         tabs[i].classList.remove('services__tab-item--active');
       }
     }
-
-    hideTabContent(1);
 
     function showTabContent(b) {
       if (tabContents[b].classList.contains('services__hide')) {
@@ -123,28 +121,28 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
 
+    hideTabContent();
+    showTabContent(0);
     tabs.forEach(function (tab, i) {
       tab.addEventListener('click', function () {
-        hideTabContent(0);
+        hideTabContent();
         showTabContent(i);
       });
     });
   }
 
+  function unSwitchTabs() {
+    for (var i = 0; i < tabContents.length; i++) {
+      tabContents[i].classList.remove('services__hide');
+    }
+  }
+
   var sliderServices = new Swiper('.services', {
-    breakpoints: {
-      320: {
-        init: true,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-          bulletClass: 'services__bullet',
-          bulletActiveClass: 'services__active-bullet'
-        }
-      },
-      1024: {
-        init: false
-      }
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+      bulletClass: 'services__bullet',
+      bulletActiveClass: 'services__active-bullet'
     }
   });
 
@@ -153,7 +151,15 @@ document.addEventListener('DOMContentLoaded', function () {
       sliderServices.destroy(false);
       switchTabs();
     } else if (window.matchMedia('(max-width: 1024px)').matches) {
-      sliderServices.init();
+      unSwitchTabs();
+      sliderServices = new Swiper('.services', {
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+          bulletClass: 'services__bullet',
+          bulletActiveClass: 'services__active-bullet'
+        }
+      });
     }
   }
 
