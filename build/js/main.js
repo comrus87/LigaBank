@@ -1,14 +1,10 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', function () {
-
   // Подключаем плавную прокрутку
-
   var scroll = new SmoothScroll('a[href*="#"]', {
     speed: 500
-  });
-
-  // Попап авторизации
+  }); // Попап авторизации
 
   var ESC_KEYCODE = 27;
   var overlayLogin = document.querySelector('.overlay-login');
@@ -48,9 +44,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var timerId = setInterval(function () {
       count++;
     }, 200);
-
     btnShowPassword.addEventListener(event, function () {
       clearInterval(timerId);
+
       if (count > 2) {
         changeShowPassword();
         count = 0;
@@ -67,29 +63,24 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (modalLogin) {
-
     btnShowPassword.addEventListener('mousedown', onBtnShowPasswordClick);
     btnShowPassword.addEventListener('touchstart', onBtnShowPasswordTouch);
-
     btnOpenModalLogin.addEventListener('click', openLoginModal);
     btnCloseModalLogin.addEventListener('click', closeLoginModal);
-
     formLogin.addEventListener('submit', function (evt) {
       evt.preventDefault();
       localStorage.setItem('Логин', loginInput.value);
       localStorage.setItem('Пароль', passwordInput.value);
       closeLoginModal();
     });
-
     document.addEventListener('keydown', function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
         closeLoginModal();
         closeModalSuccess();
       }
     });
-  }
+  } // Сладйдер
 
-  // Сладйдер
 
   var introPage = document.querySelector('.intro');
 
@@ -100,16 +91,14 @@ document.addEventListener('DOMContentLoaded', function () {
         clickable: true
       },
       autoplay: {
-        delay: 4000,
+        delay: 4000
       },
       speed: 700,
       loop: true
     });
-
     sliderIntro.init();
-  }
+  } // Блок услуги
 
-  // Блок услуги
 
   var tabs = document.querySelectorAll('.services__tab-item');
   var tabContents = document.querySelectorAll('.services__block');
@@ -120,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
       for (var i = a; i < tabContents.length; i++) {
         tabContents[i].classList.add('services__hide');
         tabContents[i].classList.remove('services__show');
-
         tabs[i].classList.remove('services__tab-item--active');
       }
     }
@@ -172,9 +160,8 @@ document.addEventListener('DOMContentLoaded', function () {
   if (servicesPage) {
     changeServicePage();
     window.addEventListener('resize', changeServicePage);
-  }
+  } // Блок калькулятор
 
-  // Блок калькулятор
 
   var ERROR_EMAIL_MESSAGE = 'Введите корректный E-mail';
   var select = document.querySelector('.calculator__select');
@@ -198,11 +185,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var offerWarning = document.querySelector('.calculator__warning');
   var offerWarningTitle = document.querySelector('.calculator__warning-title');
   var btnOpenForm = document.querySelector('.calculator__fill-form');
-
   var state = {
     modeCredit: null
   };
-
   var arrBlocks = [];
   arrBlocks.push(mortgageBlock, avtoBlock, consumerBlock);
 
@@ -210,6 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < arrBlocks.length; i++) {
       arrBlocks[i].style.display = 'none';
     }
+
     offerBlock.style.display = 'none';
     creditFormBlock.style.display = 'none';
   }
@@ -218,6 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function toggleSelect(evt) {
     evt.stopPropagation();
+
     if (!select.classList.contains('calculator__select--active')) {
       select.classList.add('calculator__select--active');
       document.addEventListener('click', function () {
@@ -234,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
     for (var i = 0; i < arrBlocks.length; i++) {
       arrBlocks[i].style.display = 'none';
     }
+
     mode.style.display = 'block';
     offerBlock.style.display = 'block';
     creditFormBlock.style.display = 'none';
@@ -250,12 +238,14 @@ document.addEventListener('DOMContentLoaded', function () {
         sumOfferTitle.textContent = 'Сумма ипотеки';
         onMortgageCalcChange();
         break;
+
       case 'avto':
         showCreditBlock(avtoBlock);
         targetForm.value = 'Автокредит';
         sumOfferTitle.textContent = 'Сумму автокредита';
         onAvtoCalcChange();
         break;
+
       case 'consumer':
         showCreditBlock(consumerBlock);
         targetForm.value = 'Потребительский кредит';
@@ -263,9 +253,8 @@ document.addEventListener('DOMContentLoaded', function () {
         onConsumerCalcChange();
         break;
     }
-  });
+  }); // иптоека
 
-  // иптоека
   var STEP_MORTGAGE = 100000;
   var MIN_COINT_MORTGAGE = 1200000;
   var MAX_COINT_MORTGAGE = 25000000;
@@ -288,9 +277,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var mortgageBtnMinus = mortgageBlock.querySelector('.calculator__btn-minus');
   var mortgageBtnPlus = mortgageBlock.querySelector('.calculator__btn-plus');
 
-
   function showCurrency(value) {
     var lastNumber = String(value).slice(-1);
+
     if (lastNumber === '1') {
       return String(value).replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ').replace(/^0+/, '') + ' рубль';
     } else if (lastNumber === '2' || lastNumber === '3' || lastNumber === '4') {
@@ -315,9 +304,8 @@ document.addEventListener('DOMContentLoaded', function () {
         input.value = String(value).replace(/^0+/, '') + ' лет';
       }
     }
-  }
+  } // Общиая сумма ипотеки
 
-  // Общиая сумма ипотеки
 
   function addStyleTotalInput(totalInput) {
     totalInput.value = totalInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
@@ -329,14 +317,10 @@ document.addEventListener('DOMContentLoaded', function () {
     var valueNumber = parseInt(totalInput.value.replace(/\D+/g, ''), 10);
 
     if (valueNumber >= minCoint && valueNumber <= maxCoint) {
-
       changeInitialInput(valueNumber, initialRangeValue, initialInput);
-
       totalInput.style.color = '#1f1e25';
       totalInput.style.borderColor = '#1f1e25';
-
       totalInput.value = showCurrency(valueNumber);
-
     } else {
       totalInput.value = 'Некорректное значение';
       totalInput.style.color = 'red';
@@ -356,7 +340,6 @@ document.addEventListener('DOMContentLoaded', function () {
   mortgageTotalInput.addEventListener('input', onMortgageTotalInput);
   mortgageTotalInput.addEventListener('change', onMortgageTotalInputChange);
 
-
   function onMortgageBtnMinusClick() {
     var valueNumber = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
 
@@ -373,7 +356,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (valueNumber <= MAX_COINT_BTN_MORTGAGE) {
       valueNumber += STEP_MORTGAGE;
-
       mortgageTotalInput.value = showCurrency(valueNumber);
       changeInitialInput(valueNumber, mortgageInitialRange.value, mortgageInitialInput);
       onMortgageCalcChange();
@@ -381,13 +363,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   mortgageBtnMinus.addEventListener('click', onMortgageBtnMinusClick);
-  mortgageBtnPlus.addEventListener('click', onMortgageBtnPlusClick);
-
-
-  // Первоначальный взнос ипотеки
+  mortgageBtnPlus.addEventListener('click', onMortgageBtnPlusClick); // Первоначальный взнос ипотеки
 
   function changeInitialInput(totalValue, persent, initialInput) {
-    var initialValueNumber = Math.round((totalValue * persent) / MAX_PERSENT);
+    var initialValueNumber = Math.round(totalValue * persent / MAX_PERSENT);
     initialInput.value = showCurrency(initialValueNumber);
   }
 
@@ -400,8 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function calcInitialInput(initialInput, totalInput, initialRange, minPersent, payPercent) {
     var valueNumber = parseInt(initialInput.value.replace(/\D+/g, ''), 10);
     var valueNumberTotal = parseInt(totalInput.value.replace(/\D+/g, ''), 10);
-
-    var percent = (valueNumber * MAX_PERSENT) / valueNumberTotal;
+    var percent = valueNumber * MAX_PERSENT / valueNumberTotal;
 
     if (percent < minPersent || !valueNumber) {
       changeInitialInput(valueNumberTotal, minPersent, initialInput);
@@ -431,12 +409,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   mortgageInitialInput.addEventListener('input', onMortgageInitialInput);
   mortgageInitialInput.addEventListener('change', onMortgageInitialInputChange);
-  mortgageInitialRange.addEventListener('change', onMortgageInitialRangeChange);
-
-  // Период ипотеки
+  mortgageInitialRange.addEventListener('change', onMortgageInitialRangeChange); // Период ипотеки
 
   function changePeriodInput(periodInput, periodRange, minPeriod, maxPeriod) {
     var valueNumber = parseInt(periodInput.value.replace(/\D+/g, ''), 10);
+
     if (valueNumber < minPeriod || !valueNumber) {
       periodInput.value = minPeriod + ' лет';
       periodRange.value = minPeriod;
@@ -464,10 +441,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   mortgagePeriodInput.addEventListener('input', onMortgagePeriodInput);
   mortgagePeriodInput.addEventListener('change', onMortgagePeriodInputChange);
-  mortgagePeriodRange.addEventListener('change', onMortgagePeriodRange);
-
-
-  // Блок предложение ипотеки
+  mortgagePeriodRange.addEventListener('change', onMortgagePeriodRange); // Блок предложение ипотеки
 
   function onMortgageCalcChange() {
     var valueTotal = parseInt(mortgageTotalInput.value.replace(/\D+/g, ''), 10);
@@ -501,23 +475,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     sumOffer.textContent = showCurrency(mortgageSum);
-
     var monthlyPow = valuePeriod * 12;
-    var monthlyPay = mortgageSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
+    var monthlyPay = mortgageSum * (percentRate + percentRate / (Math.pow(1 + percentRate, monthlyPow) - 1));
     var requiredProfit = monthlyPay * 100 / 45;
-
     payOffer.textContent = showCurrency(monthlyPay.toFixed());
     requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
-
     totalSumForm.value = mortgageTotalInput.value;
     initialPayForm.value = mortgageInitialInput.value;
     periodForm.value = mortgagePeriodInput.value;
     initialPayBlockForm.style.display = 'flex';
   }
 
-  mortgageBlock.addEventListener('change', onMortgageCalcChange);
-
-  // Форма отправки
+  mortgageBlock.addEventListener('change', onMortgageCalcChange); // Форма отправки
 
   var nameForm = document.querySelector('.credit-form__name-input');
   var phoneForm = document.querySelector('.credit-form__phone-input');
@@ -526,13 +495,12 @@ document.addEventListener('DOMContentLoaded', function () {
   var modalSuccess = document.querySelector('.modal-success');
   var overlaySuccess = document.querySelector('.overlay-success');
   var btnCloseModalSuccess = document.querySelector('.modal-success__btn-close');
-
   btnOpenForm.addEventListener('click', function () {
     creditFormBlock.style.display = 'block';
     nameForm.focus();
   });
 
-  var onEmailValidate = function () {
+  var onEmailValidate = function onEmailValidate() {
     var value = emailForm.value.trim();
     var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 
@@ -562,14 +530,14 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (creditForm) {
-    IMask(phoneForm, {mask: '+{7}(000)000-00-00'});
-
+    IMask(phoneForm, {
+      mask: '+{7}(000)000-00-00'
+    });
     emailForm.addEventListener('input', onEmailValidate);
     creditForm.addEventListener('submit', onCreditFormSubmit);
     btnCloseModalSuccess.addEventListener('click', closeModalSuccess);
-  }
+  } // Автокредит <<<<<<<<<<<<
 
-  // Автокредит <<<<<<<<<<<<
 
   var STEP_AVTO = 50000;
   var MIN_COINT_AVTO = 500000;
@@ -592,7 +560,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var kasko = avtoBlock.querySelector('.calculator__kasko input');
   var insurance = avtoBlock.querySelector('.calculator__insurance input');
 
-
   function onAvtoTotalInput() {
     addStyleTotalInput(avtoTotalInput);
   }
@@ -604,7 +571,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   avtoTotalInput.addEventListener('input', onAvtoTotalInput);
   avtoTotalInput.addEventListener('change', onAvtoTotalInputChange);
-
 
   function onAvtoBtnMinusClick() {
     var valueNumber = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
@@ -622,7 +588,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (valueNumber <= MAX_COINT_BTN_AVTO) {
       valueNumber += STEP_AVTO;
-
       avtoTotalInput.value = showCurrency(valueNumber);
       changeInitialInput(valueNumber, avtoInitialRange.value, avtoInitialInput);
       onAvtoCalcChange();
@@ -630,9 +595,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   avtoBtnMinus.addEventListener('click', onAvtoBtnMinusClick);
-  avtoBtnPlus.addEventListener('click', onAvtoBtnPlusClick);
-
-  // Первоначальный взнос авто
+  avtoBtnPlus.addEventListener('click', onAvtoBtnPlusClick); // Первоначальный взнос авто
 
   function onAvtoInitialInput() {
     avtoInitialInput.value = avtoInitialInput.value.replace(/[^\d]/g, '').replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
@@ -648,9 +611,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   avtoInitialInput.addEventListener('input', onAvtoInitialInput);
   avtoInitialInput.addEventListener('change', onAvtoInitialInputChange);
-  avtoInitialRange.addEventListener('change', onAvtoInitialRangeChange);
-
-  // Период кредитования авто
+  avtoInitialRange.addEventListener('change', onAvtoInitialRangeChange); // Период кредитования авто
 
   function onAvtoPeriodInput() {
     avtoPeriodInput.value = avtoPeriodInput.value.replace(/[^\d]/g, '');
@@ -667,15 +628,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   avtoPeriodInput.addEventListener('input', onAvtoPeriodInput);
   avtoPeriodInput.addEventListener('change', onAvtoPeriodInputChange);
-  avtoPeriodRange.addEventListener('change', onAvtoPeriodRange);
-
-  // Блок предложение авто
+  avtoPeriodRange.addEventListener('change', onAvtoPeriodRange); // Блок предложение авто
 
   function onAvtoCalcChange() {
     var valueTotal = parseInt(avtoTotalInput.value.replace(/\D+/g, ''), 10);
     var valueInitial = parseInt(avtoInitialInput.value.replace(/\D+/g, ''), 10);
     var valuePeriod = parseInt(avtoPeriodInput.value.replace(/\D+/g, ''), 10);
-
     var avtoSum = valueTotal - valueInitial;
     var percentRate;
 
@@ -705,23 +663,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     sumOffer.textContent = showCurrency(avtoSum);
-
     var monthlyPow = valuePeriod * 12;
-    var monthlyPay = avtoSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
+    var monthlyPay = avtoSum * (percentRate + percentRate / (Math.pow(1 + percentRate, monthlyPow) - 1));
     var requiredProfit = monthlyPay * 100 / 45;
-
     payOffer.textContent = showCurrency(monthlyPay.toFixed());
     requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
-
     totalSumForm.value = avtoTotalInput.value;
     initialPayForm.value = avtoInitialInput.value;
     periodForm.value = avtoPeriodInput.value;
     initialPayBlockForm.style.display = 'flex';
   }
 
-  avtoBlock.addEventListener('change', onAvtoCalcChange);
-
-  // Потребительский кредит <<<<<<<<<<<<
+  avtoBlock.addEventListener('change', onAvtoCalcChange); // Потребительский кредит <<<<<<<<<<<<
 
   var STEP_CONSUMER = 50000;
   var MIN_COINT_CONSUMER = 50000;
@@ -751,7 +704,6 @@ document.addEventListener('DOMContentLoaded', function () {
       consumerTotalInput.style.color = '#1f1e25';
       consumerTotalInput.style.borderColor = '#1f1e25';
       consumerTotalInput.value = showCurrency(valueNumber);
-
     } else {
       consumerTotalInput.value = 'Некорректное значение';
       consumerTotalInput.style.color = 'red';
@@ -777,16 +729,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (valueNumber <= MAX_COINT_BTN_CONSUMER) {
       valueNumber += STEP_CONSUMER;
-
       consumerTotalInput.value = showCurrency(valueNumber);
       onConsumerCalcChange();
     }
   }
 
   consumerBtnMinus.addEventListener('click', onConsumerBtnMinusClick);
-  consumerBtnPlus.addEventListener('click', onConsumerBtnPlusClick);
-
-  // Период кредитования потребителя
+  consumerBtnPlus.addEventListener('click', onConsumerBtnPlusClick); // Период кредитования потребителя
 
   function onConsumerPeriodInput() {
     consumerPeriodInput.value = consumerPeriodInput.value.replace(/[^\d]/g, '');
@@ -803,14 +752,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   consumerPeriodInput.addEventListener('input', onConsumerPeriodInput);
   consumerPeriodInput.addEventListener('change', onConsumerPeriodInputChange);
-  consumerPeriodRange.addEventListener('change', onConsumerPeriodRange);
-
-  // Блок предложение потребитель
+  consumerPeriodRange.addEventListener('change', onConsumerPeriodRange); // Блок предложение потребитель
 
   function onConsumerCalcChange() {
     var consumerSum = parseInt(consumerTotalInput.value.replace(/\D+/g, ''), 10);
     var valuePeriod = parseInt(consumerPeriodInput.value.replace(/\D+/g, ''), 10);
-
     var percentRate;
 
     if (consumerSum < FIRST_POINT_CONSUMER) {
@@ -831,123 +777,89 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     percentRate = percentRate / 1200;
-
     sumOffer.textContent = showCurrency(consumerSum);
-
     var monthlyPow = valuePeriod * 12;
-    var monthlyPay = consumerSum * (percentRate + (percentRate / (Math.pow((1 + percentRate), monthlyPow) - 1)));
+    var monthlyPay = consumerSum * (percentRate + percentRate / (Math.pow(1 + percentRate, monthlyPow) - 1));
     var requiredProfit = monthlyPay * 100 / 45;
-
     payOffer.textContent = showCurrency(monthlyPay.toFixed());
     requiredOffer.textContent = showCurrency(requiredProfit.toFixed());
-
     totalSumForm.value = consumerTotalInput.value;
     periodForm.value = consumerPeriodInput.value;
     initialPayBlockForm.style.display = 'none';
   }
 
-  consumerBlock.addEventListener('change', onConsumerCalcChange);
-
-  // Карта
+  consumerBlock.addEventListener('change', onConsumerCalcChange); // Карта
 
   var russiaInput = document.querySelector('#russia');
   var sngInput = document.querySelector('#sng');
   var europeInput = document.querySelector('#europe');
   var mapFilter = document.querySelector('.departments__filter-form');
-
   ymaps.ready(init);
 
   function init() {
-
     var myMap = new ymaps.Map("map", {
       center: [55.45, 37.36],
       zoom: 3,
       controls: []
     });
-
-
-    var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' +
-      '<button type="button" id="zoom-in" class="departments__btn-zoom departments__btn-zoom-in">+</button>' +
-      '<button type="button" id="zoom-out" class="departments__btn-zoom departments__btn-zoom-out">-</buton>' +
-      '</div>', {
-
-      build: function () {
+    var ZoomLayout = ymaps.templateLayoutFactory.createClass('<div>' + '<button type="button" id="zoom-in" class="departments__btn-zoom departments__btn-zoom-in">+</button>' + '<button type="button" id="zoom-out" class="departments__btn-zoom departments__btn-zoom-out">-</buton>' + '</div>', {
+      build: function build() {
         ZoomLayout.superclass.build.call(this);
         this.zoomInCallback = ymaps.util.bind(this.zoomIn, this);
         this.zoomOutCallback = ymaps.util.bind(this.zoomOut, this);
-
         document.querySelector('#zoom-in').addEventListener('click', this.zoomInCallback);
         document.querySelector('#zoom-out').addEventListener('click', this.zoomOutCallback);
       },
-
-      clear: function () {
+      clear: function clear() {
         document.querySelector('#zoom-in').removeEventListener('click', this.zoomInCallback);
         document.querySelector('#zoom-out').removeEventListener('click', this.zoomOutCallback);
-
         ZoomLayout.superclass.clear.call(this);
       },
-
-      zoomIn: function () {
+      zoomIn: function zoomIn() {
         var map = this.getData().control.getMap();
-        map.setZoom(map.getZoom() + 1, {checkZoomRange: true});
+        map.setZoom(map.getZoom() + 1, {
+          checkZoomRange: true
+        });
       },
-
-      zoomOut: function () {
+      zoomOut: function zoomOut() {
         var map = this.getData().control.getMap();
-        map.setZoom(map.getZoom() - 1, {checkZoomRange: true});
+        map.setZoom(map.getZoom() - 1, {
+          checkZoomRange: true
+        });
       }
     });
-
-    var zoomControl = new ymaps.control.ZoomControl({options: {layout: ZoomLayout}});
-
+    var zoomControl = new ymaps.control.ZoomControl({
+      options: {
+        layout: ZoomLayout
+      }
+    });
     myMap.controls.add(zoomControl, {
       position: {
         top: 170,
         right: 10
       }
     });
-
-    var GeoLayout = ymaps.templateLayoutFactory.createClass('<button type="button" id="geo-location" class="departments__geo-location" aria-label="Показать мое местоположение"></button>', {
+    var GeoLayout = ymaps.templateLayoutFactory.createClass('<button type="button" id="geo-location" class="departments__geo-location" aria-label="Показать мое местоположение"></button>', {});
+    var geoLocationControl = new ymaps.control.GeolocationControl({
+      options: {
+        layout: GeoLayout
+      }
     });
-
-    var geoLocationControl = new ymaps.control.GeolocationControl({options: {layout: GeoLayout}});
-
     myMap.controls.add(geoLocationControl, {
       position: {
         top: 250,
         right: 10
       }
-    });
+    }); // Маркеры на карте
 
-    // Маркеры на карте
-
-    var coordsRussia = [
-      [55.75, 37.61],
-      [59.93, 30.31],
-      [51.54, 46.00],
-      [67.61, 33.66],
-      [57.15, 65.53],
-      [54.99, 73.36]
-    ];
-
-    var coordsSNG = [
-      [40.36, 49.83],
-      [41.31, 69.27],
-      [53.90, 27.56],
-      [43.23, 76.94]
-    ];
-
-    var coordsEurope = [
-      [48.85, 2.35],
-      [50.08, 14.42],
-      [51.50, -0.12],
-      [41.90, 12.49]
-    ];
+    var coordsRussia = [[55.75, 37.61], [59.93, 30.31], [51.54, 46.00], [67.61, 33.66], [57.15, 65.53], [54.99, 73.36]];
+    var coordsSNG = [[40.36, 49.83], [41.31, 69.27], [53.90, 27.56], [43.23, 76.94]];
+    var coordsEurope = [[48.85, 2.35], [50.08, 14.42], [51.50, -0.12], [41.90, 12.49]];
 
     function madeCollection(coords) {
       var collection = new ymaps.GeoObjectCollection({}, {
         iconLayout: 'default#image',
-        iconImageHref: 'img/marker.png',
+        iconImageHref: 'img/marker.png'
       });
 
       for (var i = 0; i < coords.length; i++) {
@@ -967,11 +879,13 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         myMap.geoObjects.remove(russiaCollection);
       }
+
       if (sngInput.checked) {
         myMap.geoObjects.add(sngCollection);
       } else {
         myMap.geoObjects.remove(sngCollection);
       }
+
       if (europeInput.checked) {
         myMap.geoObjects.add(europeCollection);
       } else {
@@ -982,5 +896,4 @@ document.addEventListener('DOMContentLoaded', function () {
     onFilterChange();
     mapFilter.addEventListener('change', onFilterChange);
   }
-
 });

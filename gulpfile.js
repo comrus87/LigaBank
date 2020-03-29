@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 var gulp = require("gulp");
 var plumber = require("gulp-plumber");
 var sourcemap = require("gulp-sourcemaps");
@@ -19,7 +17,6 @@ var include = require("posthtml-include");
 var del = require("del");
 var concat = require('gulp-concat');
 var babel = require('gulp-babel');
-var uglify = require('gulp-uglify');
 
 gulp.task("css", function () {
   return gulp.src("source/sass/style.scss")
@@ -27,6 +24,7 @@ gulp.task("css", function () {
     .pipe(sourcemap.init())
     .pipe(sass())
     .pipe(postcss([ autoprefixer() ]))
+    .pipe(gulp.dest("build/css"))
     .pipe(csso())
     .pipe(rename("style.min.css"))
     .pipe(sourcemap.write("."))
@@ -90,23 +88,16 @@ gulp.task("html", function () {
 gulp.task("js", function () {
   return gulp.src("source/js/*.js")
     .pipe(plumber())
-    .pipe(sourcemap.init())
+    .pipe(babel({presets: ['@babel/preset-env']}))
     .pipe(concat('main.js'))
-    .pipe(uglify())
-    .pipe(rename('main.min.js'))
-    .pipe(sourcemap.write(''))
     .pipe(gulp.dest('build/js'));
 });
 
 gulp.task('js-vendor', function () {
   return gulp.src(['source/js/vendor/*.js'])
     .pipe(plumber())
-    .pipe(sourcemap.init())
     .pipe(babel({presets: ['@babel/preset-env']}))
     .pipe(concat('vendor.js'))
-    .pipe(uglify())
-    .pipe(rename('vendor.min.js'))
-    .pipe(sourcemap.write(''))
     .pipe(gulp.dest('build/js'));
 });
 
