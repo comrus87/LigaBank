@@ -137,13 +137,14 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  var servicesPagination = {
+    el: '.swiper-pagination',
+    clickable: true,
+    bulletClass: 'services__bullet',
+    bulletActiveClass: 'services__active-bullet'
+  };
   var sliderServices = new Swiper('.services', {
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-      bulletClass: 'services__bullet',
-      bulletActiveClass: 'services__active-bullet'
-    }
+    pagination: servicesPagination
   });
 
   function changeServicePage() {
@@ -154,12 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
       unSwitchTabs();
       sliderServices.destroy();
       sliderServices = new Swiper('.services', {
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-          bulletClass: 'services__bullet',
-          bulletActiveClass: 'services__active-bullet'
-        }
+        pagination: servicesPagination
       });
     }
   }

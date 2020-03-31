@@ -566,7 +566,7 @@ img {
 .intro__item--cards {
   background: url("../img/bg-slide3-desktop.jpg") no-repeat center;
   background-color: #2d36f3;
-  background-size: cover; }
+  background-size: auto 100%; }
   .intro__item--cards h1 {
     color: #f6f7ff; }
   .intro__item--cards p {
@@ -576,9 +576,9 @@ img {
     color: #1f1e25; }
 
 .intro__item--man {
-  background: url("../img/bg-slide1-desktop.jpg") no-repeat center;
-  background-color: #dee2ed;
-  background-size: cover; }
+  background: url("../img/bg-slide1-desktop.jpg") no-repeat center, -webkit-gradient(linear, left top, right top, from(#dee2ed), color-stop(50%, #dee2ed), color-stop(50%, #f6fbff), to(#f6fbff));
+  background: url("../img/bg-slide1-desktop.jpg") no-repeat center, linear-gradient(to right, #dee2ed 0%, #dee2ed 50%, #f6fbff 50%, #f6fbff 100%);
+  background-size: auto 100%; }
   .intro__item--man h1 {
     color: #1f1e25; }
   .intro__item--man p {
@@ -587,7 +587,7 @@ img {
 .intro__item--woman {
   background: url("../img/bg-slide2-desktop.jpg") no-repeat center;
   background-color: #e7f1fd;
-  background-size: cover; }
+  background-size: auto 100%; }
   .intro__item--woman h1 {
     color: #1f1e25; }
   .intro__item--woman p {
@@ -626,13 +626,16 @@ img {
     padding: 15px 0 17px; }
   .intro__item--cards {
     background: url("../img/bg-slide3-tablet.jpg") no-repeat center;
-    background-size: cover; }
+    background-color: #2d36f3;
+    background-size: auto 100%; }
   .intro__item--man {
-    background: url("../img/bg-slide1-tablet.jpg") no-repeat center;
-    background-size: cover; }
+    background: url("../img/bg-slide1-tablet.jpg") no-repeat center, -webkit-gradient(linear, left top, right top, from(#dee2ed), color-stop(50%, #dee2ed), color-stop(50%, #f6fbff), to(#f6fbff));
+    background: url("../img/bg-slide1-tablet.jpg") no-repeat center, linear-gradient(to right, #dee2ed 0%, #dee2ed 50%, #f6fbff 50%, #f6fbff 100%);
+    background-size: auto 100%; }
   .intro__item--woman {
     background: url("../img/bg-slide2-tablet.jpg") no-repeat center;
-    background-size: cover; }
+    background-color: #e7f1fd;
+    background-size: auto 100%; }
     .intro__item--woman a {
       width: 206px; }
   .intro__swiper-pagination {
@@ -656,16 +659,19 @@ img {
     line-height: 16px;
     padding: 14px 0 13px; }
   .intro__item--cards {
-    background: url("../img/bg-slide3-mobile.jpg") no-repeat center;
-    background-size: cover; }
+    background: url("../img/bg-slide3-mobile.jpg") no-repeat right;
+    background-color: #2d36f3;
+    background-size: auto 100%; }
   .intro__item--man {
-    background: url("../img/bg-slide1-mobile.jpg") no-repeat center;
-    background-size: cover; }
+    background: url("../img/bg-slide1-mobile.jpg") no-repeat right, -webkit-gradient(linear, left top, right top, from(#dee2ed), to(#dee2ed));
+    background: url("../img/bg-slide1-mobile.jpg") no-repeat right, linear-gradient(to right, #dee2ed, #dee2ed);
+    background-size: auto 100%; }
     .intro__item--man p {
       width: 150px; }
   .intro__item--woman {
-    background: url("../img/bg-slide2-mobile.jpg") no-repeat center;
-    background-size: cover; }
+    background: url("../img/bg-slide2-mobile.jpg") no-repeat right;
+    background-color: #e7f1fd;
+    background-size: auto 100%; }
     .intro__item--woman a {
       width: 188px; }
   .intro__swiper-pagination {

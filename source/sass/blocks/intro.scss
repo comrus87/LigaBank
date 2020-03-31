@@ -47,7 +47,7 @@
   &__item--cards {
     background: url("../img/bg-slide3-desktop.jpg") no-repeat center;
     background-color: #2d36f3;
-    background-size: cover;
+    background-size: auto 100%;
 
     h1 {
       color: $bg-color;
@@ -64,9 +64,9 @@
   }
 
   &__item--man {
-    background: url("../img/bg-slide1-desktop.jpg") no-repeat center;
-    background-color: #dee2ed;
-    background-size: cover;
+    background: url("../img/bg-slide1-desktop.jpg") no-repeat center,
+      linear-gradient(to right, #dee2ed 0%, #dee2ed 50%, #f6fbff 50%, #f6fbff 100%);
+    background-size: auto 100%;
 
     h1 {
       color: $black-color;
@@ -80,7 +80,7 @@
   &__item--woman {
     background: url("../img/bg-slide2-desktop.jpg") no-repeat center;
     background-color: #e7f1fd;
-    background-size: cover;
+    background-size: auto 100%;
 
     h1 {
       color: $black-color;
@@ -139,17 +139,20 @@
 
     &__item--cards {
       background: url("../img/bg-slide3-tablet.jpg") no-repeat center;
-      background-size: cover;
+      background-color: #2d36f3;
+      background-size: auto 100%;
     }
 
     &__item--man {
-      background: url("../img/bg-slide1-tablet.jpg") no-repeat center;
-      background-size: cover;
+      background: url("../img/bg-slide1-tablet.jpg") no-repeat center,
+        linear-gradient(to right, #dee2ed 0%, #dee2ed 50%, #f6fbff 50%, #f6fbff 100%);
+      background-size: auto 100%;
     }
 
     &__item--woman {
       background: url("../img/bg-slide2-tablet.jpg") no-repeat center;
-      background-size: cover;
+      background-color: #e7f1fd;
+      background-size: auto 100%;
 
       a {
         width: 206px;
@@ -189,13 +192,15 @@
     }
 
     &__item--cards {
-      background: url("../img/bg-slide3-mobile.jpg") no-repeat center;
-      background-size: cover;
+      background: url("../img/bg-slide3-mobile.jpg") no-repeat right;
+      background-color: #2d36f3;
+      background-size: auto 100%;
     }
 
     &__item--man {
-      background: url("../img/bg-slide1-mobile.jpg") no-repeat center;
-      background-size: cover;
+      background: url("../img/bg-slide1-mobile.jpg") no-repeat right,
+        linear-gradient(to right, #dee2ed, #dee2ed);
+      background-size: auto 100%;
 
       p {
         width: 150px;
@@ -203,8 +208,9 @@
     }
 
     &__item--woman {
-      background: url("../img/bg-slide2-mobile.jpg") no-repeat center;
-      background-size: cover;
+      background: url("../img/bg-slide2-mobile.jpg") no-repeat right;
+      background-color: #e7f1fd;
+      background-size: auto 100%;
 
       a {
         width: 188px;
