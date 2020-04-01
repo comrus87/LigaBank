@@ -40,18 +40,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function showPasswordUnPress(event) {
-    var count = 0;
-    var timerId = setInterval(function () {
-      count++;
-    }, 200);
-    btnShowPassword.addEventListener(event, function () {
-      clearInterval(timerId);
-
-      if (count > 2) {
-        changeShowPassword();
-        count = 0;
-      }
-    });
+    changeShowPassword();
+    btnShowPassword.addEventListener(event, changeShowPassword);
   }
 
   function onBtnShowPasswordClick() {
